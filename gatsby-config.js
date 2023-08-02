@@ -6,8 +6,7 @@ module.exports = {
     description:
       'Engineer in computer science and expert in the digital world is Mohammad Sabith. utilizing software and design innovation. Let us construct something exceptional.',
     siteUrl: 'https://statuesque-kulfi-bfe680.netlify.app', // No trailing slash allowed!
-    image:
-      'https://v5.airtableusercontent.com/v1/19/19/1691028000000/bNb1pJ2mqNa320RKZfWaeg/WWbmNQdGUt_-Iq3_5QF9kJ9FXBkg3AM1Td-VQCHr6uTZ6e4XuocIF1MLjiIRo5LQAlyz8wN8NevyCh60hDP4AcoFzelcE0Ozfs2H6I99StM/HTKyRGko5mr-yGIEU9-lOScDkLne_HMrYooJ13Ugk04', // Path to your image you placed in the 'static' folder
+    image: 'static/SABITH.jpg', // Path to your image you placed in the 'static' folder
     twitterUsername: '',
   },
   plugins: [

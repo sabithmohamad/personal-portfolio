@@ -151,9 +151,11 @@ const About = () => {
             </p>
             <p>
               My technological path began with a Diploma in Computer Science from {''}{' '}
-              <a href="http://www.kvg.com ">Kvg polytechnic</a> from 2017 to 2020. Later, I
-              Graduated from {''}{' '}
-              <a href=" https://www.sahyadri.com">Sahyadri College of Management and Engineering</a>{' '}
+              <a href="http://www.kvgpolytechnic.org.in ">Kvg polytechnic</a> from 2017 to 2020.
+              Later, I Graduated from {''}{' '}
+              <a href=" https://www.sahyadri.edu.in">
+                Sahyadri College of Management and Engineering
+              </a>{' '}
               with a Bachelor's degree in Computer Science and Engineering in 2020-2023.
             </p>
 
