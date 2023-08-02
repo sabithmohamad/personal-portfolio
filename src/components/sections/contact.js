@@ -3,6 +3,8 @@ import styled from 'styled-components';
 import { srConfig, email } from '@config';
 import sr from '@utils/sr';
 import { usePrefersReducedMotion } from '@hooks';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEnvelope, faPhoneAlt } from '@fortawesome/free-solid-svg-icons';
 
 const StyledContactSection = styled.section`
   max-width: 600px;
@@ -35,9 +37,32 @@ const StyledContactSection = styled.section`
     font-size: clamp(40px, 5vw, 60px);
   }
 
-  .email-link {
-    ${({ theme }) => theme.mixins.bigButton};
+  .contact-buttons-container {
     margin-top: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px; /* Adjust the gap between buttons */
+  }
+
+  .contact-button {
+    ${({ theme }) => theme.mixins.bigButton};
+    display: flex;
+    align-items: center;
+    flex-direction: column; /* For icons above the text on larger screens */
+    gap: 10px; /* Adjust the gap between icon and text */
+  }
+
+  /* Hide text on smaller screens */
+  @media (max-width: 768px) {
+    .contact-button .button-text {
+      display: none; /* Hide the button text on mobile screens */
+    }
+
+    /* Adjust margins to display the buttons in the same line */
+    .contact-buttons-container {
+      margin-top: 30px;
+    }
   }
 `;
 
@@ -64,9 +89,22 @@ const Contact = () => {
         Whether you have a question or just want to say hi, I’ll try my best to get back to you!
       </p>
 
-      <a className="email-link" href={`mailto:${email}`}>
-        Say Hello
-      </a>
+      <p>
+        <strong> Qusais, Dubai, United Arab Emirates. </strong>
+      </p>
+
+      <div className="contact-buttons-container">
+        {/* Use the common class for both buttons */}
+        <a className="contact-button" href={`Tel:+971552428080`}>
+          <FontAwesomeIcon icon={faPhoneAlt} />
+          <span className="button-text">Say Hello</span>
+        </a>
+
+        <a className="contact-button" href={`mailto:${email}`}>
+          <FontAwesomeIcon icon={faEnvelope} />
+          <span className="button-text">Drop a Mail</span>
+        </a>
+      </div>
     </StyledContactSection>
   );
 };

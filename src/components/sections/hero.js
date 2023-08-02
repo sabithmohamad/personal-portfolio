@@ -3,6 +3,8 @@ import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import styled from 'styled-components';
 import { navDelay, loaderDelay } from '@utils';
 import { usePrefersReducedMotion } from '@hooks';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEnvelope, faPhoneAlt } from '@fortawesome/free-solid-svg-icons';
 
 const StyledHeroSection = styled.section`
   ${({ theme }) => theme.mixins.flexCenter};
@@ -40,9 +42,21 @@ const StyledHeroSection = styled.section`
     max-width: 540px;
   }
 
-  .email-link {
+  .big-button {
+    /* Apply the same styles to both buttons */
     ${({ theme }) => theme.mixins.bigButton};
-    margin-top: 50px;
+    margin-top: 20px;
+  }
+
+  /* New CSS to align buttons in the same row */
+  .button-container {
+    display: flex;
+    gap: 20px; /* Adjust the gap between buttons as needed */
+  }
+
+  .icon {
+    font-size: 20px; /* Adjust the icon size as needed */
+    width: 30px;
   }
 `;
 
@@ -66,25 +80,36 @@ const Hero = () => {
     <>
       <p>
         A Front-End Developer | Computer Science Engineer with a passion for coding, gaming and
-        football. Currently employed at{' '}
-        <a href="https://www.bbleads.in" target="_blank" rel="noreferrer">
-          bbleads
-        </a>
-        .
+        football. <br></br>{' '}
+        <strong>I'm currently seeking a full-time position based in Dubai, UAE. </strong>
       </p>
     </>
   );
   const five = (
     <a
-      className="email-link"
+      className="big-button"
       href="mailto:sabithmohamad1@gmail.com"
       target="_blank"
       rel="noreferrer">
-      Contact Me
+      <FontAwesomeIcon className="icon" icon={faEnvelope} />
     </a>
   );
 
-  const items = [one, two, three, four, five];
+  const six = (
+    <a className="big-button" href="tel:+971552428080" target="_blank" rel="noreferrer">
+      <FontAwesomeIcon className="icon" icon={faPhoneAlt} />
+    </a>
+  );
+
+  // Wrap the buttons in a container with display: flex
+  const buttonContainer = (
+    <div className="button-container">
+      {five}
+      {six}
+    </div>
+  );
+
+  const items = [one, two, three, four, buttonContainer];
 
   return (
     <StyledHeroSection>

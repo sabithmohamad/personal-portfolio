@@ -1,6 +1,6 @@
 ---
 date: '2'
-title: 'Transportation website'
+title: 'logistics supplying buisness website'
 cover: 'bizlink.png'
 github: '#'
 external: 'https://www.bizlinkdxb.com/'

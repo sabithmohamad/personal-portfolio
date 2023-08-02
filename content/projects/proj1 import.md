@@ -1,6 +1,6 @@
 ---
 date: '2020-09-16'
-title: 'Import/Export website'
+title: 'Frieght Buisness Website'
 github: '#'
 external: 'https://www.speedzyfreight.com/'
 tech:
@@ -12,4 +12,4 @@ company: 'speedzy'
 showInProjects: true
 ---
 
-Import export Website which is also mobile friendly
+freight buinsess Website which is also mobile friendly

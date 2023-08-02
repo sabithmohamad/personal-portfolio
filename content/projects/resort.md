@@ -11,4 +11,4 @@ company: 'Freelance'
 showInProjects: true
 ---
 
-Built an resort management website get in repo
+Built an resort management website get in github
