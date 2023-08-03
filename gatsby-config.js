@@ -6,7 +6,7 @@ module.exports = {
     description:
       'Engineer in computer science and expert in the digital world is Mohammad Sabith. utilizing software and design innovation. Let us construct something exceptional.',
     siteUrl: 'https://statuesque-kulfi-bfe680.netlify.app', // No trailing slash allowed!
-    image: 'static/SABITH.jpg', // Path to your image you placed in the 'static' folder
+    image: 'static/sabith.jpg', // Path to your image you placed in the 'static' folder
     twitterUsername: '',
   },
   plugins: [
