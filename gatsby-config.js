@@ -4,8 +4,8 @@ module.exports = {
   siteMetadata: {
     title: 'Mohammad Sabith',
     description:
-      'Engineer in computer science and expert in the digital world is Mohammad Sabith. utilizing software and design innovation. Let us construct something exceptional.',
-    siteUrl: 'https://statuesque-kulfi-bfe680.netlify.app', // No trailing slash allowed!
+      'Engineer in computer science and expert in the Web. utilizing software and design innovation. Let us construct something exceptional.',
+    siteUrl: 'https://www.mohammadsabith.com', // No trailing slash allowed!
     image: 'static/sabith.jpg', // Path to your image you placed in the 'static' folder
     twitterUsername: '',
   },
