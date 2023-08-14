@@ -1,5 +1,5 @@
 ---
-date: '2020-04-13'
+date: '2'
 title: 'Tip Calculator'
 github: 'https://github.com/sabithmohamad/javascript-tipcalculator'
 android: ''

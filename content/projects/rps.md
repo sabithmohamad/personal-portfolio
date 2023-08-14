@@ -1,5 +1,5 @@
 ---
-date: '2020-04-13'
+date: '1'
 title: 'Rock Paper Scessor'
 github: 'https://github.com/sabithmohamad/RPSgame'
 android: ''
