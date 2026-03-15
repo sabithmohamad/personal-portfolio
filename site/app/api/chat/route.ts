@@ -2,13 +2,14 @@ import { NextRequest, NextResponse } from 'next/server';
 import { GoogleGenAI } from '@google/genai';
 
 import { buildModelInput, buildSystemPrompt, chunkText, DEFAULT_MODEL, getFallbackStreamText, sanitizeMessages } from '@/lib/chat';
-import { buildDonePayload, detectIntent, isBlockedPrompt } from '@/lib/portfolio-data';
+import { buildDonePayload, detectIntent, isBlockedPrompt, prefersGroundedVoice } from '@/lib/portfolio-data';
 import { rateLimit } from '@/lib/rate-limit';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
 
 const encoder = new TextEncoder();
+const STREAM_PACE_MS = 18;
 
 const getIpAddress = (request: NextRequest) => {
   const forwardedFor = request.headers.get('x-forwarded-for');
@@ -22,6 +23,8 @@ const getIpAddress = (request: NextRequest) => {
 
 const sse = (event: string, data: unknown) =>
   encoder.encode(`event: ${event}\ndata: ${JSON.stringify(data)}\n\n`);
+
+const sleep = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
 
 const streamingHeaders = (limit: Awaited<ReturnType<typeof rateLimit>>) => ({
   'Content-Type': 'text/event-stream; charset=utf-8',
@@ -69,7 +72,8 @@ export async function POST(request: NextRequest) {
 
   const intent = detectIntent(latestUserMessage);
   const donePayload = buildDonePayload(intent, latestUserMessage);
-  const shouldRefuse = isBlockedPrompt(latestUserMessage) || intent === 'unknown';
+  const shouldUseGroundedVoice =
+    isBlockedPrompt(latestUserMessage) || intent === 'unknown' || prefersGroundedVoice(latestUserMessage);
 
   const stream = new TransformStream();
   const writer = stream.writable.getWriter();
@@ -78,17 +82,18 @@ export async function POST(request: NextRequest) {
     await writer.write(sse(event, data));
   };
 
-  const streamFallback = async (text: string) => {
+  const streamText = async (text: string) => {
     for (const delta of chunkText(text)) {
       await send('chunk', { delta });
+      await sleep(STREAM_PACE_MS);
     }
   };
 
   void (async () => {
     try {
-      if (shouldRefuse || !process.env.GEMINI_API_KEY) {
+      if (shouldUseGroundedVoice || !process.env.GEMINI_API_KEY) {
         const text = getFallbackStreamText(intent, latestUserMessage);
-        await streamFallback(text);
+        await streamText(text);
         await send('done', donePayload);
         return;
       }
@@ -101,7 +106,7 @@ export async function POST(request: NextRequest) {
         model: DEFAULT_MODEL,
         contents: buildModelInput(intent, messages),
         config: {
-          systemInstruction: buildSystemPrompt(intent),
+          systemInstruction: buildSystemPrompt(intent, latestUserMessage),
           maxOutputTokens: 320,
         },
       });
@@ -111,18 +116,18 @@ export async function POST(request: NextRequest) {
       for await (const chunk of responseStream as AsyncIterable<{ text?: string }>) {
         if (chunk.text) {
           output += chunk.text;
-          await send('chunk', { delta: chunk.text });
+          await streamText(chunk.text);
         }
       }
 
       if (!output.trim()) {
-        await streamFallback(getFallbackStreamText(intent, latestUserMessage));
+        await streamText(getFallbackStreamText(intent, latestUserMessage));
       }
 
       await send('done', donePayload);
     } catch (error) {
       console.error('chat_route_error', error);
-      await streamFallback(getFallbackStreamText(intent, latestUserMessage));
+      await streamText(getFallbackStreamText(intent, latestUserMessage));
       await send('done', donePayload);
     } finally {
       await writer.close();

@@ -181,6 +181,17 @@ const hirePatterns = [
   /\bconvince me\b/i,
 ];
 
+const specialtyPatterns = [
+  /\bwhat do you specialize in\b/i,
+  /\bwhat are your specialt(?:y|ies)\b/i,
+  /\bwhat are your specialit(?:y|ies)\b/i,
+  /\bwhat are your specalities\b/i,
+  /\bwhat are you best at\b/i,
+  /\bwhat is your edge\b/i,
+  /\bwhat do you bring to a team\b/i,
+  /\bwhat kind of engineer are you\b/i,
+];
+
 const intentMatchers: Array<{ intent: PortfolioIntent; patterns: RegExp[] }> = [
   {
     intent: 'resume',
@@ -200,7 +211,17 @@ const intentMatchers: Array<{ intent: PortfolioIntent; patterns: RegExp[] }> = [
   },
   {
     intent: 'skills',
-    patterns: [/\bskill/i, /\bstack\b/i, /\btech\b/i, /\btools\b/i, /\bspeciali[sz]e/i, /\bfrontend\b/i],
+    patterns: [
+      /\bskill/i,
+      /\bstack\b/i,
+      /\btech\b/i,
+      /\btools\b/i,
+      /\bspeciali[sz]e/i,
+      /\bspecialt(?:y|ies)\b/i,
+      /\bspecialit(?:y|ies)\b/i,
+      /\bspecalities\b/i,
+      /\bfrontend\b/i,
+    ],
   },
   {
     intent: 'experience',
@@ -236,7 +257,11 @@ const joinList = (items: string[]) => {
   return `${items.slice(0, -1).join(', ')}, and ${items[items.length - 1]}`;
 };
 
-const isHirePrompt = (message: string) => hirePatterns.some(pattern => pattern.test(message));
+export const isHirePrompt = (message: string) => hirePatterns.some(pattern => pattern.test(message));
+
+export const isSpecialtyPrompt = (message: string) => specialtyPatterns.some(pattern => pattern.test(message));
+
+export const prefersGroundedVoice = (message: string) => isHirePrompt(message) || isSpecialtyPrompt(message);
 
 const isAiIdentityPrompt = (message: string) => /\b(ai|gemini|gpt|chatgpt|codex|bot|robot)\b/i.test(message);
 
@@ -250,6 +275,8 @@ const pickReply = (message: string, variants: string[]) => {
 };
 
 const playfulRedirect = (message: string) => {
+  const compactTopic = message.replace(/\s+/g, ' ').trim().slice(0, 42);
+
   if (isAiIdentityPrompt(message)) {
     return pickReply(message, [
       `Call me Sabith with a fast silicon intern in the back room. The point of this page is still my work, so ask me about experience, projects, or why I might be a strong fit.`,
@@ -271,6 +298,14 @@ const playfulRedirect = (message: string) => {
       `My favorite joke is still shaving seconds off a dashboard before someone suggests a meeting about it. If you want the serious version, ask me about the products I built.`,
       `I work in frontend, so my comedy mostly looks like fixing performance before the loading spinner gets promoted. Ask me about the actual shipped work.`,
       `The punchline is usually performance debt. If you want something more useful, ask me about my projects, experience, or why I would be a good fit.`,
+    ]);
+  }
+
+  if (/\b(can you|could you|help me with|tell me about)\b/i.test(message) && compactTopic) {
+    return pickReply(message, [
+      `"${compactTopic}" is slightly outside what this page is tuned for. I am much more useful when the topic is frontend work, shipped products, or why I might be a strong hire.`,
+      `I could improvise on "${compactTopic}", but I would be much sharper talking through the products I built, how I work, or the kind of frontend problems I solve well.`,
+      `That asks me to step outside my portfolio lane. If you want the high-signal version of me, ask about product UI, performance, collaboration, or fit.`,
     ]);
   }
 
@@ -398,7 +433,7 @@ export const buildDonePayload = (intent: PortfolioIntent, message: string): Chat
 
 export const generateFallbackAnswer = (intent: PortfolioIntent, message: string) => {
   if (isHirePrompt(message)) {
-    return `You should hire me if you need a frontend engineer who combines product thinking with strong execution. I work confidently in React and TypeScript, I care about performance, and I focus on building interfaces that feel clean for users while still being practical for the team maintaining them.\n\nMy recent work is backed by outcomes, not just features: 25% higher operational efficiency, a 46% load-time improvement on a signing workflow, and products supporting 1,000+ weekly sessions. That mix of engineering quality, speed, and business impact is where I add the most value.`;
+    return `The reason to hire me is not just that I can build screens. It is that I usually sit in the overlap between product judgment and frontend execution. I pay attention to how the interface feels, how the data flows, where performance starts to drag, and whether the solution actually reduces friction for the people using it.\n\nThat matters because the pattern shows up in outcomes, not just implementation details: a recovery workflow that improved operational efficiency by 25%, a signing flow that went from 3.9s to 2.1s, and products supporting 1,000+ weekly sessions. So the value I bring is usually a calmer product, stronger frontend quality, and less drag for the team after launch.`;
   }
 
   switch (intent) {
@@ -427,7 +462,11 @@ export const generateFallbackAnswer = (intent: PortfolioIntent, message: string)
       )}. Together they show a mix of internal product work, workflow design, performance optimization, and polished frontend execution.\n\nIf you want, I can go deeper into any one of them and break down the problem, stack, and outcome.`;
     }
     case 'skills':
-      return `My core stack is React, TypeScript, JavaScript, and modern frontend architecture. I'm especially strong in performance optimization, API integration, responsive UI work, and building interfaces that are clean for users but practical for the team maintaining them.\n\nI also work comfortably with React Query, Tailwind CSS, Vercel, Render, Supabase, and the deployment and collaboration pieces around production delivery.`;
+      if (isSpecialtyPrompt(message)) {
+        return `What I specialize in is frontend work where polish alone is not enough. I am strongest when the UI has real data, messy business rules, performance pressure, and a team that still needs the codebase to stay understandable after launch.\n\nSo if I describe it the honest way, my lane is React and TypeScript product work that feels clean for users, behaves reliably under real usage, and stays practical for the team maintaining it. That usually means performance tuning, API-heavy workflows, reusable UI structure, and turning complex operational needs into a calmer interface.`;
+      }
+
+      return `My core strengths are React, TypeScript, API-heavy product UI, and performance-minded frontend architecture. I tend to do my best work where the interface has to be clean for users, but also resilient enough for a real product team to keep building on.\n\nThat usually translates into component systems, data flow design, performance tuning, responsive UI work, and making complicated workflows feel simpler than they actually are.`;
     case 'resume':
       return `You can open the latest resume directly from the resume action on the page. If you want a quick summary first, I can also give you the short version of my experience, strengths, and current project highlights right here.`;
     case 'contact':

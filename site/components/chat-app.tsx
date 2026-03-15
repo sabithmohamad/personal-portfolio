@@ -76,6 +76,7 @@ export function ChatApp() {
   const [draft, setDraft] = useState('');
   const [isStreaming, setIsStreaming] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const transcriptViewportRef = useRef<HTMLDivElement | null>(null);
   const transcriptEndRef = useRef<HTMLDivElement | null>(null);
   const textareaRef = useRef<HTMLTextAreaElement | null>(null);
 
@@ -83,9 +84,25 @@ export function ChatApp() {
   const fixedActions = useMemo(() => contact.actions.slice(0, 3), []);
   const footerActions = useMemo(() => contact.actions.slice(0, 3), []);
 
+  const scrollTranscriptToBottom = (behavior: ScrollBehavior) => {
+    const viewport = transcriptViewportRef.current;
+
+    if (!viewport) {
+      transcriptEndRef.current?.scrollIntoView({ behavior, block: 'end' });
+      return;
+    }
+
+    window.requestAnimationFrame(() => {
+      viewport.scrollTo({
+        top: viewport.scrollHeight,
+        behavior,
+      });
+    });
+  };
+
   useEffect(() => {
-    transcriptEndRef.current?.scrollIntoView({ behavior: hasConversation ? 'smooth' : 'auto', block: 'end' });
-  }, [messages, hasConversation]);
+    scrollTranscriptToBottom(isStreaming ? 'auto' : hasConversation ? 'smooth' : 'auto');
+  }, [messages, hasConversation, isStreaming]);
 
   useEffect(() => {
     const node = textareaRef.current;
@@ -331,7 +348,9 @@ export function ChatApp() {
                 <div className="flex min-h-0 flex-1 flex-col">
                   <div className="transcript-fade" />
 
-                  <div className="flex-1 overflow-y-auto px-4 pb-4 pt-5 sm:px-8 sm:pb-6 sm:pt-8">
+                  <div
+                    className="flex-1 overflow-y-auto px-4 pb-4 pt-5 sm:px-8 sm:pb-6 sm:pt-8"
+                    ref={transcriptViewportRef}>
                     <div aria-live="polite" className="mx-auto max-w-4xl space-y-6">
                       <div className="conversation-intro">
                         <div className="flex items-center gap-2 text-[11px] uppercase tracking-[0.28em] text-slate">
