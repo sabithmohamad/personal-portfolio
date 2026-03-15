@@ -19,11 +19,11 @@ export function RichBlocks({ blocks, suggestedFollowups, onPromptSelect }: RichB
         switch (block.type) {
           case 'metrics':
             return (
-              <section key={`${block.type}-${index}`} className="surface-soft rounded-3xl p-4">
+              <section key={`${block.type}-${index}`} className="glass-card">
                 <p className="font-mono text-[11px] uppercase tracking-[0.3em] text-slate">{block.title}</p>
                 <div className="mt-3 grid gap-3 sm:grid-cols-3">
                   {block.items.map(item => (
-                    <div key={`${block.title}-${item.label}`} className="rounded-2xl border border-white/8 bg-white/[0.03] p-3">
+                    <div key={`${block.title}-${item.label}`} className="rounded-[20px] border border-white/[0.08] bg-white/[0.02] p-3">
                       <p className="text-xs text-slate">{item.label}</p>
                       <p className="mt-1 text-sm font-semibold text-ink">{item.value}</p>
                     </div>
@@ -33,11 +33,11 @@ export function RichBlocks({ blocks, suggestedFollowups, onPromptSelect }: RichB
             );
           case 'timeline':
             return (
-              <section key={`${block.type}-${index}`} className="surface-soft rounded-3xl p-4">
+              <section key={`${block.type}-${index}`} className="glass-card">
                 <p className="font-mono text-[11px] uppercase tracking-[0.3em] text-slate">{block.title}</p>
                 <div className="mt-3 space-y-3">
                   {block.items.map(item => (
-                    <article key={`${block.title}-${item.title}`} className="rounded-2xl border border-white/8 bg-white/[0.03] p-4">
+                    <article key={`${block.title}-${item.title}`} className="rounded-[20px] border border-white/[0.08] bg-white/[0.02] p-4">
                       <div className="flex flex-col gap-1 sm:flex-row sm:items-center sm:justify-between">
                         <h3 className="text-sm font-semibold text-ink">{item.title}</h3>
                         <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-slate">{item.meta}</p>
@@ -50,11 +50,11 @@ export function RichBlocks({ blocks, suggestedFollowups, onPromptSelect }: RichB
             );
           case 'projects':
             return (
-              <section key={`${block.type}-${index}`} className="surface-soft rounded-3xl p-4">
+              <section key={`${block.type}-${index}`} className="glass-card">
                 <p className="font-mono text-[11px] uppercase tracking-[0.3em] text-slate">{block.title}</p>
                 <div className="mt-3 grid gap-4 lg:grid-cols-3">
                   {block.items.map(item => (
-                    <article key={item.title} className="overflow-hidden rounded-[28px] border border-white/10 bg-[#0d1525]">
+                    <article key={item.title} className="overflow-hidden rounded-[24px] border border-white/[0.08] bg-[#11131a]">
                       <div
                         className="relative h-28 overflow-hidden px-5 py-4"
                         style={{ background: `linear-gradient(135deg, ${item.accentFrom}, ${item.accentTo})` }}>
@@ -88,11 +88,11 @@ export function RichBlocks({ blocks, suggestedFollowups, onPromptSelect }: RichB
             );
           case 'skills':
             return (
-              <section key={`${block.type}-${index}`} className="surface-soft rounded-3xl p-4">
+              <section key={`${block.type}-${index}`} className="glass-card">
                 <p className="font-mono text-[11px] uppercase tracking-[0.3em] text-slate">{block.title}</p>
                 <div className="mt-3 grid gap-3 sm:grid-cols-2">
                   {block.groups.map(group => (
-                    <article key={group.label} className="rounded-2xl border border-white/8 bg-white/[0.03] p-4">
+                    <article key={group.label} className="rounded-[20px] border border-white/[0.08] bg-white/[0.02] p-4">
                       <h3 className="text-sm font-semibold text-ink">{group.label}</h3>
                       <p className="mt-2 text-sm leading-6 text-mist">{group.items.join(' · ')}</p>
                     </article>
@@ -102,13 +102,13 @@ export function RichBlocks({ blocks, suggestedFollowups, onPromptSelect }: RichB
             );
           case 'actions':
             return (
-              <section key={`${block.type}-${index}`} className="surface-soft rounded-3xl p-4">
+              <section key={`${block.type}-${index}`} className="glass-card">
                 <p className="font-mono text-[11px] uppercase tracking-[0.3em] text-slate">{block.title}</p>
                 <div className="mt-3 grid gap-3 sm:grid-cols-2">
                   {block.items.map(item => (
                     <a
                       key={`${block.title}-${item.label}`}
-                      className="rounded-2xl border border-white/8 bg-white/[0.03] p-4 transition hover:border-white/20 hover:bg-white/[0.05]"
+                      className="rounded-[20px] border border-white/[0.08] bg-white/[0.02] p-4 transition hover:border-white/20 hover:bg-white/[0.05]"
                       href={item.href}
                       rel={item.kind === 'external' ? 'noreferrer' : undefined}
                       target={item.kind === 'external' ? '_blank' : undefined}>
@@ -132,7 +132,7 @@ export function RichBlocks({ blocks, suggestedFollowups, onPromptSelect }: RichB
           {suggestedFollowups.map(prompt => (
             <button
               key={prompt}
-              className="rounded-full border border-white/10 bg-white/[0.03] px-3 py-2 text-sm text-mist transition hover:border-white/20 hover:bg-white/[0.07] hover:text-ink"
+              className="prompt-pill"
               onClick={() => onPromptSelect(prompt)}
               type="button">
               {prompt}
