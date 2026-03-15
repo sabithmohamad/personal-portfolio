@@ -60,9 +60,7 @@ body {
   margin: 0;
   min-height: 100vh;
   font-family: var(--font-sans);
-  background:
-    radial-gradient(circle at top, rgba(255, 255, 255, 0.06), transparent 18%),
-    linear-gradient(180deg, #2b2b31 0%, #242429 100%);
+  background: #15171c;
 }
 
 ::selection {
@@ -124,28 +122,15 @@ textarea {
   position: relative;
   min-height: 100vh;
   overflow: hidden;
-  background:
-    radial-gradient(circle at top center, rgba(255, 255, 255, 0.06), transparent 20%),
-    linear-gradient(180deg, #292a30 0%, #23242a 100%);
+  background: #15171c;
 }
 
 .app-backdrop-grid {
-  pointer-events: none;
-  position: absolute;
-  inset: 0;
-  background-image:
-    linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
-  background-size: 120px 120px;
-  mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.65), transparent 90%);
+  display: none;
 }
 
 .ambient-orb {
-  pointer-events: none;
-  position: absolute;
-  border-radius: 9999px;
-  filter: blur(80px);
-  opacity: 0.45;
+  display: none;
 }
 
 .ambient-orb-cyan {
@@ -166,22 +151,11 @@ textarea {
 
 .browser-shell {
   position: relative;
-  background:
-    linear-gradient(180deg, rgba(18, 19, 24, 0.95), rgba(11, 12, 15, 0.98)),
-    rgba(9, 10, 14, 0.98);
-  border: 1px solid rgba(255, 255, 255, 0.06);
-  box-shadow:
-    0 32px 90px rgba(0, 0, 0, 0.45),
-    inset 0 1px 0 rgba(255, 255, 255, 0.04);
+  background: #0d1015;
 }
 
 .browser-shell::before {
-  content: '';
-  pointer-events: none;
-  position: absolute;
-  inset: 0;
-  border-radius: inherit;
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.04), transparent 18%);
+  display: none;
 }
 
 .browser-chrome {
@@ -192,9 +166,8 @@ textarea {
   justify-content: space-between;
   gap: 1rem;
   padding: 1rem 1.25rem;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
-  background: rgba(9, 10, 14, 0.72);
-  backdrop-filter: blur(16px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  background: #0d1015;
 }
 
 .traffic-dot {
@@ -214,7 +187,6 @@ textarea {
   color: #8f97ad;
   background: rgba(255, 255, 255, 0.03);
   transition:
-    transform 180ms ease,
     border-color 180ms ease,
     background 180ms ease,
     color 180ms ease;
@@ -228,7 +200,6 @@ textarea {
 
 .chrome-icon-button:hover,
 .rail-button:hover {
-  transform: translateY(-1px);
   border-color: rgba(255, 255, 255, 0.12);
   background: rgba(255, 255, 255, 0.06);
   color: #e8ecff;
@@ -244,8 +215,8 @@ textarea {
   margin: 0 auto;
   max-width: 34rem;
   border-radius: 9999px;
-  border: 1px solid rgba(255, 255, 255, 0.06);
-  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  background: #141820;
   padding: 0.7rem 1rem;
   color: #a7aec4;
   font-family: var(--font-mono);
@@ -261,11 +232,10 @@ textarea {
   align-items: center;
   justify-content: center;
   border-radius: 9999px;
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  background: #171b23;
   color: #b6bfd5;
   transition:
-    transform 180ms ease,
     border-color 180ms ease,
     background 180ms ease,
     color 180ms ease;
@@ -279,7 +249,6 @@ textarea {
 .action-pill:hover,
 .prompt-pill:hover,
 .footer-link:hover {
-  transform: translateY(-1px);
   border-color: rgba(255, 255, 255, 0.14);
   background: rgba(255, 255, 255, 0.06);
   color: #f5f7ff;
@@ -294,7 +263,7 @@ textarea {
   justify-content: space-between;
   padding: 1.25rem 0.85rem;
   border-right: 1px solid rgba(255, 255, 255, 0.05);
-  background: rgba(10, 11, 15, 0.72);
+  background: #0d1015;
 }
 
 .rail-button {
@@ -323,34 +292,16 @@ textarea {
   background: #79ff57;
   box-shadow:
     0 0 0 0 rgba(121, 255, 87, 0.25),
-    0 0 18px rgba(121, 255, 87, 0.35);
-  animation: signalPulse 2.2s ease-in-out infinite;
+    0 0 10px rgba(121, 255, 87, 0.22);
 }
 
 .content-frame {
   position: relative;
-  background:
-    radial-gradient(circle at top center, rgba(255, 255, 255, 0.035), transparent 22%),
-    linear-gradient(180deg, #101115 0%, #0a0b0d 100%);
+  background: #11141a;
 }
 
 .content-frame::before {
-  content: '';
-  pointer-events: none;
-  position: absolute;
-  left: 50%;
-  top: 0;
-  height: 100%;
-  width: min(34vw, 26rem);
-  transform: translateX(-50%);
-  background: linear-gradient(
-    180deg,
-    rgba(255, 255, 255, 0.08) 0%,
-    rgba(255, 255, 255, 0.015) 22%,
-    transparent 66%
-  );
-  opacity: 0.7;
-  filter: blur(0.5px);
+  display: none;
 }
 
 .hero-column-glow {
@@ -365,15 +316,12 @@ textarea {
   pointer-events: none;
   position: absolute;
   left: 50%;
-  top: -7rem;
-  height: 18rem;
-  width: 18rem;
+  top: -8rem;
+  height: 24rem;
+  width: 22rem;
   transform: translateX(-50%);
-  border-radius: 9999px;
-  background:
-    radial-gradient(circle, rgba(255, 255, 255, 0.13) 0%, rgba(123, 138, 255, 0.12) 34%, transparent 72%);
-  filter: blur(26px);
-  animation: heroDrift 9s ease-in-out infinite;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.07), rgba(255, 255, 255, 0.018) 42%, transparent 100%);
+  opacity: 0.22;
 }
 
 .hero-mark {
@@ -384,12 +332,9 @@ textarea {
   height: 5.75rem;
   width: 5.75rem;
   border-radius: 1.7rem;
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  background: linear-gradient(180deg, rgba(32, 34, 41, 0.95), rgba(16, 17, 21, 0.95));
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.05),
-    0 18px 50px rgba(0, 0, 0, 0.45);
-  animation: heroFloat 6.5s ease-in-out infinite;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  background: #171b23;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.03);
 }
 
 .tiny-chip,
@@ -398,8 +343,8 @@ textarea {
   align-items: center;
   justify-content: center;
   border-radius: 9999px;
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  background: #171b23;
 }
 
 .tiny-chip {
@@ -422,18 +367,12 @@ textarea {
   overflow: hidden;
   border-radius: 1.75rem;
   border: 1px solid rgba(255, 255, 255, 0.06);
-  background: linear-gradient(180deg, rgba(24, 26, 32, 0.94), rgba(13, 14, 18, 0.98));
-  box-shadow:
-    0 22px 60px rgba(0, 0, 0, 0.34),
-    inset 0 1px 0 rgba(255, 255, 255, 0.04);
+  background: #171b23;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
 }
 
 .composer-panel::before {
-  content: '';
-  pointer-events: none;
-  position: absolute;
-  inset: 0;
-  background: radial-gradient(circle at top center, rgba(255, 255, 255, 0.08), transparent 40%);
+  display: none;
 }
 
 .composer-input-shell {
@@ -443,23 +382,13 @@ textarea {
   gap: 0.9rem;
   border-radius: 1.5rem;
   border: 1px solid rgba(255, 255, 255, 0.08);
-  background:
-    linear-gradient(115deg, rgba(255, 255, 255, 0.04), transparent 38%),
-    linear-gradient(180deg, rgba(25, 27, 33, 0.96), rgba(16, 17, 21, 0.96));
+  background: #11141a;
   padding: 1rem;
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05);
 }
 
 .composer-input-shell::after {
-  content: '';
-  pointer-events: none;
-  position: absolute;
-  inset: 0;
-  border-radius: inherit;
-  background: linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.08) 50%, transparent 100%);
-  opacity: 0.14;
-  transform: translateX(-100%);
-  animation: composerSweep 6s linear infinite;
+  display: none;
 }
 
 .composer-leading,
@@ -493,7 +422,6 @@ textarea {
 }
 
 .composer-send:hover:not(:disabled) {
-  transform: translateY(-1px);
   border-color: rgba(255, 255, 255, 0.16);
   background: rgba(255, 255, 255, 0.08);
 }
@@ -521,11 +449,7 @@ textarea {
 }
 
 .transcript-fade {
-  pointer-events: none;
-  position: absolute;
-  inset: 0 0 auto;
-  height: 7rem;
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.025), transparent 100%);
+  display: none;
 }
 
 .conversation-intro,
@@ -533,9 +457,8 @@ textarea {
 .assistant-bubble,
 .user-bubble {
   border: 1px solid rgba(255, 255, 255, 0.08);
-  background: rgba(255, 255, 255, 0.03);
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.03);
-  backdrop-filter: blur(18px);
+  background: #171b23;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.02);
 }
 
 .conversation-intro {
@@ -554,12 +477,12 @@ textarea {
 }
 
 .assistant-bubble {
-  background: linear-gradient(180deg, rgba(26, 28, 34, 0.94), rgba(16, 17, 21, 0.94));
+  background: #171b23;
   color: #d9e0f3;
 }
 
 .user-bubble {
-  background: linear-gradient(180deg, rgba(34, 40, 59, 0.9), rgba(25, 29, 44, 0.9));
+  background: #20283f;
   color: #eef2ff;
 }
 
@@ -581,7 +504,7 @@ textarea {
   height: 0.42rem;
   width: 0.42rem;
   border-radius: 9999px;
-  box-shadow: 0 0 14px currentColor;
+  box-shadow: 0 0 8px currentColor;
 }
 
 .glass-card {
@@ -638,36 +561,6 @@ textarea {
   animation-delay: 320ms;
 }
 
-@keyframes heroFloat {
-  0%,
-  100% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(-7px);
-  }
-}
-
-@keyframes heroDrift {
-  0%,
-  100% {
-    transform: translateX(-50%) scale(1);
-  }
-  50% {
-    transform: translateX(-50%) scale(1.08);
-  }
-}
-
-@keyframes composerSweep {
-  0% {
-    transform: translateX(-100%);
-  }
-  45%,
-  100% {
-    transform: translateX(100%);
-  }
-}
-
 @keyframes loaderSweep {
   0%,
   100% {
@@ -690,23 +583,9 @@ textarea {
   }
 }
 
-@keyframes signalPulse {
-  0%,
-  100% {
-    box-shadow:
-      0 0 0 0 rgba(121, 255, 87, 0.25),
-      0 0 18px rgba(121, 255, 87, 0.35);
-  }
-  50% {
-    box-shadow:
-      0 0 0 7px rgba(121, 255, 87, 0),
-      0 0 22px rgba(121, 255, 87, 0.45);
-  }
-}
-
 @media (max-width: 767px) {
   .browser-shell {
-    min-height: calc(100vh - 1rem);
+    min-height: 100vh;
   }
 
   .browser-chrome {

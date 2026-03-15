@@ -262,12 +262,8 @@ export function ChatApp() {
 
   return (
     <main className="app-stage">
-      <div className="ambient-orb ambient-orb-cyan" />
-      <div className="ambient-orb ambient-orb-amber" />
-      <div className="app-backdrop-grid" />
-
-      <div className="relative mx-auto flex min-h-screen w-full max-w-[1500px] items-center px-3 py-3 sm:px-5 sm:py-5">
-        <div className="browser-shell flex min-h-[calc(100vh-1.5rem)] w-full flex-col overflow-hidden rounded-[32px]">
+      <div className="relative flex min-h-screen w-full">
+        <div className="browser-shell flex min-h-screen w-full flex-col overflow-hidden">
           <BrowserChrome actions={fixedActions} />
 
           <div className="flex min-h-0 flex-1">
@@ -368,7 +364,7 @@ export function ChatApp() {
                         return (
                           <article
                             key={message.id}
-                            className={`message-shell animate-fadeUp ${isAssistant ? 'mr-auto' : 'ml-auto'}`}>
+                            className={`message-shell ${isAssistant ? 'mr-auto' : 'ml-auto'}`}>
                             <div className={isAssistant ? 'assistant-bubble' : 'user-bubble'}>
                               <div className="message-label-row">
                                 <span className="inline-flex items-center gap-2">
@@ -402,7 +398,7 @@ export function ChatApp() {
                     </div>
                   </div>
 
-                  <div className="border-t border-white/[0.06] bg-[#090b10]/82 px-4 pb-4 pt-4 backdrop-blur-xl sm:px-8 sm:pb-6">
+                  <div className="border-t border-white/[0.06] bg-[#0d1015] px-4 pb-4 pt-4 sm:px-8 sm:pb-6">
                     <div className="mx-auto max-w-4xl">
                       <Composer
                         draft={draft}
