@@ -4,6 +4,7 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 
 import { contact, profile, starterPrompts } from '@/lib/portfolio-data';
 import { RichBlocks } from '@/components/rich-blocks';
+import { SabithMarkIcon } from '@/components/sabith-mark';
 import type { ApiChatMessage, ChatDonePayload, ChatMessage } from '@/types/chat';
 
 const initialHighlights = [
@@ -267,10 +268,10 @@ export function ChatApp() {
           <BrowserChrome actions={fixedActions} />
 
           <div className="flex min-h-0 flex-1">
-            <aside className="side-rail hidden md:flex">
-              <button className="rail-button" type="button">
-                <SabithMarkIcon />
-              </button>
+              <aside className="side-rail hidden md:flex">
+                <button className="rail-button" type="button">
+                  <SabithMarkIcon className="h-6 w-6" />
+                </button>
               <div className="space-y-3">
                 <button className="rail-button" type="button">
                   <PanelsIcon />
@@ -290,7 +291,7 @@ export function ChatApp() {
                 <div className="flex flex-1 flex-col items-center justify-center px-5 pb-10 pt-8 text-center sm:px-10">
                   <div className="hero-column-glow">
                     <div className="hero-mark">
-                      <SabithMarkIcon />
+                      <SabithMarkIcon animated className="h-10 w-10" />
                     </div>
                   </div>
 
@@ -581,34 +582,6 @@ function ResponseLoader({ compact = false }: { compact?: boolean }) {
         <span className="loader-line w-4/5" />
       </div>
     </div>
-  );
-}
-
-function SabithMarkIcon() {
-  return (
-    <svg aria-hidden="true" className="h-7 w-7" fill="none" viewBox="0 0 32 32">
-      <rect height="28" rx="9" width="28" x="2" y="2" fill="url(#markPanel)" />
-      <path
-        d="M10.8 17.5c1.7-4.5 7.5-7.1 12.6-5.2-1.3 3.8-4.8 7.3-10.6 7.3-1.1 0-1.7-.7-2-2.1z"
-        fill="url(#markGlow)"
-      />
-      <path
-        d="M20.4 14.5c-.9 2.6-3.4 5.2-7.5 5.2-1 0-1.7-.2-2.2-.5"
-        stroke="white"
-        strokeLinecap="round"
-        strokeWidth="1.5"
-      />
-      <defs>
-        <linearGradient id="markPanel" x1="4" x2="28" y1="4" y2="28">
-          <stop stopColor="#141822" />
-          <stop offset="1" stopColor="#0c0f16" />
-        </linearGradient>
-        <linearGradient id="markGlow" x1="10" x2="24" y1="12" y2="22">
-          <stop stopColor="#f2f5ff" />
-          <stop offset="1" stopColor="#6d86ff" />
-        </linearGradient>
-      </defs>
-    </svg>
   );
 }
 

@@ -16,4 +16,7 @@ out/
 .next-dev.err.log
 .next-start.log
 .next-start.err.log
+.vercel-*.log
 *.tsbuildinfo
+
+.vercel

@@ -337,6 +337,29 @@ textarea {
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.03);
 }
 
+.sabith-mark-svg {
+  display: block;
+  overflow: visible;
+}
+
+.sabith-mark-halo,
+.sabith-mark-sheen {
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+.sabith-mark-ribbon {
+  filter: drop-shadow(0 4px 12px rgba(128, 152, 255, 0.18));
+}
+
+.sabith-mark-animated .sabith-mark-halo {
+  animation: markHalo 4.8s ease-in-out infinite;
+}
+
+.sabith-mark-animated .sabith-mark-sheen {
+  animation: markSheen 4.8s ease-in-out infinite;
+}
+
 .tiny-chip,
 .badge-pill {
   display: inline-flex;
@@ -580,6 +603,35 @@ textarea {
   50% {
     transform: scaleY(1);
     opacity: 1;
+  }
+}
+
+@keyframes markHalo {
+  0%,
+  100% {
+    opacity: 0.16;
+    transform: scale(0.96);
+  }
+  50% {
+    opacity: 0.3;
+    transform: scale(1.04);
+  }
+}
+
+@keyframes markSheen {
+  0%,
+  100% {
+    opacity: 0.58;
+  }
+  50% {
+    opacity: 0.96;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sabith-mark-animated .sabith-mark-halo,
+  .sabith-mark-animated .sabith-mark-sheen {
+    animation: none;
   }
 }
 

@@ -7,7 +7,8 @@ export const metadata: Metadata = {
   description:
     'A chat-first portfolio for Mohammad Sabith, a frontend engineer focused on React, TypeScript, performance, and product-minded UI.',
   icons: {
-    icon: '/favicon.svg',
+    icon: [{ url: '/favicon.svg?v=4', type: 'image/svg+xml' }],
+    shortcut: '/favicon.svg?v=4',
   },
 };
 
