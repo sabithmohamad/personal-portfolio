@@ -1,0 +1,122 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: dark;
+  --font-sans: 'Calibre', sans-serif;
+  --font-mono: 'SF Mono', monospace;
+}
+
+@font-face {
+  font-family: 'Calibre';
+  src: url('../src/fonts/Calibre/Calibre-Regular.woff2') format('woff2');
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Calibre';
+  src: url('../src/fonts/Calibre/Calibre-Medium.woff2') format('woff2');
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Calibre';
+  src: url('../src/fonts/Calibre/Calibre-Semibold.woff2') format('woff2');
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SF Mono';
+  src: url('../src/fonts/SFMono/SFMono-Regular.woff2') format('woff2');
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SF Mono';
+  src: url('../src/fonts/SFMono/SFMono-Medium.woff2') format('woff2');
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: var(--font-sans);
+  background:
+    radial-gradient(circle at top left, rgba(34, 211, 238, 0.18), transparent 28%),
+    radial-gradient(circle at bottom right, rgba(249, 115, 22, 0.12), transparent 24%),
+    linear-gradient(180deg, #050a13 0%, #09111f 48%, #060d17 100%);
+}
+
+::selection {
+  background: rgba(125, 211, 252, 0.24);
+  color: #f8fbff;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button,
+input,
+textarea {
+  font: inherit;
+}
+
+textarea {
+  resize: none;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(145, 160, 198, 0.18);
+  border-radius: 9999px;
+}
+
+.grid-overlay {
+  background-image: linear-gradient(rgba(160, 174, 208, 0.08) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(160, 174, 208, 0.08) 1px, transparent 1px);
+  background-size: 72px 72px;
+  mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.7), transparent 92%);
+}
+
+.surface {
+  background: linear-gradient(180deg, rgba(15, 23, 40, 0.88), rgba(9, 17, 31, 0.96));
+  border: 1px solid rgba(160, 174, 208, 0.16);
+  box-shadow: 0 24px 60px rgba(2, 6, 23, 0.35);
+}
+
+.surface-soft {
+  background: rgba(12, 19, 34, 0.75);
+  border: 1px solid rgba(160, 174, 208, 0.12);
+}
+
+.text-balance {
+  text-wrap: balance;
+}

@@ -1,87 +1,73 @@
-<div align="center">
-  <img alt="Logo" src="/static/logo.png" width="100" />
-</div>
-<h1 align="center">
-  brittanychiang.com - v4
-</h1>
-<p align="center">
-  The fourth iteration of <a href="https://brittanychiang.com" target="_blank">brittanychiang.com</a> built with <a href="https://www.gatsbyjs.org/" target="_blank">Gatsby</a> and hosted with <a href="https://www.netlify.com/" target="_blank">Netlify</a>
-</p>
-<p align="center">
-  Previous iterations:
-  <a href="https://github.com/bchiang7/v1" target="_blank">v1</a>,
-  <a href="https://github.com/bchiang7/v2" target="_blank">v2</a>,
-  <a href="https://github.com/bchiang7/bchiang7.github.io" target="_blank">v3</a>
-</p>
-<p align="center">
-  <a href="https://app.netlify.com/sites/brittanychiang/deploys" target="_blank">
-    <img src="https://api.netlify.com/api/v1/badges/1963b488-7b78-48c9-9e2d-6fb5e47ab3af/deploy-status" alt="Netlify Status" />
-  </a>
-</p>
+# Mohammad Sabith Portfolio
 
-![demo](/static/og.png)
+A fresh chat-first portfolio for Mohammad Sabith. The active build is a public one-page Next.js app that presents the portfolio as a grounded AI conversation instead of a traditional scrolling resume site.
 
-## 🚨 Forking this repo (please read!)
+## Active App
 
-Many people have contacted me asking me if they can use this code for their own website, and the answer to that question is usually **yes, with attribution**.
+The new portfolio lives in `site/`.
 
-I value keeping my site open source, but as you all know, _**plagiarism is bad**_. It's always disheartening whenever I find that someone has copied my site without giving me credit. I spent a non-trivial amount of effort building and designing this iteration of my website, and I am proud of it! All I ask of you all is to not claim this effort as your own.
+It includes:
 
-Please also note that I did not build this site with the intention of it being a starter theme, so if you have questions about implementation, please refer to the [Gatsby docs](https://www.gatsbyjs.org/docs/).
+- a GPT-style chat interface with Sabith as the portfolio voice
+- grounded answers for experience, projects, skills, resume, and contact
+- Gemini server-side integration with local portfolio guardrails
+- rich response cards for projects, experience, and contact actions
+- a direct `resume.pdf` route for resume access
 
-### TL;DR
+## Stack
 
-Yes, you can fork this repo. Please give me proper credit by linking back to [brittanychiang.com](https://brittanychiang.com). Thanks!
+- Next.js 15
+- React 19
+- TypeScript
+- Tailwind CSS
+- Google Gemini via `@google/genai`
+- Upstash rate limiting support
 
-## 🛠 Installation & Set Up
+## Local Development
 
-1. Install the Gatsby CLI
+From the `site/` folder:
 
-   ```sh
-   npm install -g gatsby-cli
-   ```
+```bash
+npm install
+npm run dev
+```
 
-2. Install and use the correct version of Node using [NVM](https://github.com/nvm-sh/nvm)
+If `next dev` has trouble in your shell, you can still verify the app with:
 
-   ```sh
-   nvm install
-   ```
+```bash
+npm run build
+npm run start
+```
 
-3. Install dependencies
+## Environment Variables
 
-   ```sh
-   yarn
-   ```
+Create `site/.env.local` with the variables from `site/.env.example`:
 
-4. Start the development server
+```bash
+GEMINI_API_KEY=
+GEMINI_MODEL=gemini-2.5-flash
+UPSTASH_REDIS_REST_URL=
+UPSTASH_REDIS_REST_TOKEN=
+```
 
-   ```sh
-   npm start
-   ```
+Notes:
 
-## 🚀 Building and Running for Production
+- `GEMINI_API_KEY` is required for live model responses
+- without Upstash credentials, the app falls back to in-memory rate limiting
+- `.env.local` is intentionally ignored and should never be committed
 
-1. Generate a full static production build
+## Deployment
 
-   ```sh
-   npm run build
-   ```
+Deploy the `site/` directory as the Vercel project root.
 
-1. Preview the site as it will appear once deployed
+Recommended settings:
 
-   ```sh
-   npm run serve
-   ```
+- Framework preset: `Next.js`
+- Root directory: `site`
+- Build command: `npm run build`
+- Install command: `npm install`
 
-## 🎨 Color Reference
+## Project Status
 
-| Color          | Hex                                                                |
-| -------------- | ------------------------------------------------------------------ |
-| Navy           | ![#0a192f](https://via.placeholder.com/10/0a192f?text=+) `#0a192f` |
-| Light Navy     | ![#112240](https://via.placeholder.com/10/0a192f?text=+) `#112240` |
-| Lightest Navy  | ![#233554](https://via.placeholder.com/10/303C55?text=+) `#233554` |
-| Slate          | ![#8892b0](https://via.placeholder.com/10/8892b0?text=+) `#8892b0` |
-| Light Slate    | ![#a8b2d1](https://via.placeholder.com/10/a8b2d1?text=+) `#a8b2d1` |
-| Lightest Slate | ![#ccd6f6](https://via.placeholder.com/10/ccd6f6?text=+) `#ccd6f6` |
-| White          | ![#e6f1ff](https://via.placeholder.com/10/e6f1ff?text=+) `#e6f1ff` |
-| Green          | ![#64ffda](https://via.placeholder.com/10/64ffda?text=+) `#64ffda` |
+This repository still contains some legacy template history from the earlier portfolio base, but the current portfolio work is centered on the `site/` app.
+
