@@ -83,7 +83,6 @@ export function ChatApp() {
 
   const hasConversation = messages.length > 0;
   const fixedActions = useMemo(() => contact.actions.slice(0, 3), []);
-  const footerActions = useMemo(() => contact.actions.slice(0, 3), []);
 
   const scrollTranscriptToBottom = (behavior: ScrollBehavior) => {
     const viewport = transcriptViewportRef.current;
@@ -263,15 +262,15 @@ export function ChatApp() {
 
   return (
     <main className="app-stage">
-      <div className="relative flex min-h-screen w-full">
-        <div className="browser-shell flex min-h-screen w-full flex-col overflow-hidden">
+      <div className="app-shell">
+        <div className="browser-shell flex h-full w-full flex-col overflow-hidden">
           <BrowserChrome actions={fixedActions} />
 
           <div className="flex min-h-0 flex-1">
-              <aside className="side-rail hidden md:flex">
-                <button className="rail-button" type="button">
-                  <SabithMarkIcon className="h-6 w-6" />
-                </button>
+            <aside className="side-rail hidden md:flex">
+              <button className="rail-button" type="button">
+                <SabithMarkIcon className="h-6 w-6" />
+              </button>
               <div className="space-y-3">
                 <button className="rail-button" type="button">
                   <PanelsIcon />
@@ -286,59 +285,63 @@ export function ChatApp() {
               </div>
             </aside>
 
-            <section className="content-frame flex min-h-0 flex-1 flex-col">
+            <section className="content-frame flex min-h-0 flex-1 flex-col overflow-hidden">
               {!hasConversation ? (
-                <div className="flex flex-1 flex-col items-center justify-center px-5 pb-10 pt-8 text-center sm:px-10">
-                  <div className="hero-column-glow">
-                    <div className="hero-mark">
-                      <SabithMarkIcon animated className="h-10 w-10" />
+                <div className="landing-screen">
+                  <div className="landing-stack">
+                    <div className="hero-column-glow">
+                      <div className="hero-mark">
+                        <SabithMarkIcon animated className="h-10 w-10" />
+                      </div>
                     </div>
-                  </div>
 
-                  <div className="tiny-chip">Sabith&apos;s portfolio assistant</div>
+                    <div className="tiny-chip">Sabith&apos;s portfolio assistant</div>
 
-                  <h1 className="mt-6 max-w-3xl text-balance text-4xl font-semibold tracking-[-0.04em] text-ink sm:text-6xl">
-                    Good to see you. Ask Sabith anything.
-                  </h1>
+                    <div className="landing-copy">
+                      <h1 className="landing-title text-balance font-semibold tracking-[-0.05em] text-ink">
+                        Good to see you. Ask Sabith anything.
+                      </h1>
 
-                  <p className="mt-4 max-w-2xl text-balance text-base leading-7 text-mist sm:text-xl sm:leading-8">
-                    Experience, shipped frontend work, performance wins, product judgment, or why I might be a strong hire.
-                  </p>
+                      <p className="landing-subtitle text-balance text-mist">
+                        Experience, shipped frontend work, performance wins, product judgment, or why I might be a strong hire.
+                      </p>
+                    </div>
 
-                  <div className="mt-6 flex flex-wrap items-center justify-center gap-3">
-                    {initialHighlights.map(highlight => (
-                      <span key={highlight} className="badge-pill">
-                        {highlight}
-                      </span>
-                    ))}
-                  </div>
+                    <div className="landing-highlights">
+                      {initialHighlights.map(highlight => (
+                        <span key={highlight} className="badge-pill">
+                          {highlight}
+                        </span>
+                      ))}
+                    </div>
 
-                  <div className="mt-12 w-full max-w-3xl">
-                    <Composer
-                      draft={draft}
-                      isStreaming={isStreaming}
-                      onDraftChange={setDraft}
-                      onKeyDown={onComposerKeyDown}
-                      onPromptSelect={onPromptSelect}
-                      onSubmit={onSubmit}
-                      placeholder="Ask about experience, projects, hiring fit, or how to reach me."
-                      prompts={starterPrompts}
-                      statusLabel="Portfolio scope active"
-                      textareaRef={textareaRef}
-                    />
-                  </div>
+                    <div className="landing-composer">
+                      <Composer
+                        draft={draft}
+                        isStreaming={isStreaming}
+                        onDraftChange={setDraft}
+                        onKeyDown={onComposerKeyDown}
+                        onPromptSelect={onPromptSelect}
+                        onSubmit={onSubmit}
+                        placeholder="Ask about experience, projects, hiring fit, or how to reach me."
+                        prompts={starterPrompts}
+                        statusLabel="Portfolio scope active"
+                        textareaRef={textareaRef}
+                      />
+                    </div>
 
-                  <div className="footer-link-row mt-8">
-                    {footerActions.map(action => (
-                      <a
-                        key={action.label}
-                        className="footer-link"
-                        href={action.href}
-                        rel={action.kind === 'external' ? 'noreferrer' : undefined}
-                        target={action.kind === 'external' ? '_blank' : undefined}>
-                        {action.label}
-                      </a>
-                    ))}
+                    <div className="footer-link-row mobile-landing-actions">
+                      {fixedActions.map(action => (
+                        <a
+                          key={action.label}
+                          className="footer-link"
+                          href={action.href}
+                          rel={action.kind === 'external' ? 'noreferrer' : undefined}
+                          target={action.kind === 'external' ? '_blank' : undefined}>
+                          {action.label}
+                        </a>
+                      ))}
+                    </div>
                   </div>
                 </div>
               ) : (
