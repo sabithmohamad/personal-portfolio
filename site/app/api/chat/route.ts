@@ -73,7 +73,13 @@ export async function POST(request: NextRequest) {
   const intent = detectIntent(latestUserMessage);
   const donePayload = buildDonePayload(intent, latestUserMessage);
   const shouldUseGroundedVoice =
-    isBlockedPrompt(latestUserMessage) || intent === 'unknown' || prefersGroundedVoice(latestUserMessage);
+    isBlockedPrompt(latestUserMessage) ||
+    intent === 'unknown' ||
+    intent === 'about' ||
+    intent === 'contact' ||
+    intent === 'resume' ||
+    intent === 'availability' ||
+    prefersGroundedVoice(latestUserMessage);
 
   const stream = new TransformStream();
   const writer = stream.writable.getWriter();

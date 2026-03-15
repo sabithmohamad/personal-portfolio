@@ -1,4 +1,5 @@
 import type {
+  ActionItem,
   ApiChatMessage,
   ChatDonePayload,
   ChatUiBlock,
@@ -13,11 +14,11 @@ import type {
 export const profile: PortfolioProfile = {
   name: 'Mohammad Sabith',
   shortName: 'Sabith',
-  role: 'Frontend Engineer',
+  role: 'Software Engineer',
   location: 'Abu Dhabi, UAE',
-  tagline: 'Builds fast, product-minded React and TypeScript experiences with real business impact.',
+  tagline: 'Software engineer with strong React and TypeScript depth, product judgment, and measurable delivery.',
   summary:
-    'Frontend Engineer with 3+ years of experience building modern React and TypeScript products. Strong in performance optimization, API-heavy workflows, UI systems, and shipping features that improve how teams and customers actually work.',
+    'Software Engineer with 3+ years of production experience, based in Abu Dhabi, UAE. Sabith specializes in React and TypeScript, has shipped real systems used by real users, and approaches frontend work with product judgment, performance awareness, and delivery discipline.',
   yearsExperience: '3+ years',
   metrics: [
     { label: 'Experience', value: '3+ years' },
@@ -29,19 +30,22 @@ export const profile: PortfolioProfile = {
 export const experiences: PortfolioExperience[] = [
   {
     company: 'Royal Swiss Auto Services',
-    role: 'Frontend Developer / Software Engineer',
+    role: 'Frontend Developer',
     period: 'Dec 2023 - Present',
     location: 'Abu Dhabi, UAE',
     summary:
-      'Building internal products for operations-heavy workflows, with a focus on performance, live data, and practical business outcomes.',
+      'Sabith builds operations-heavy production systems with real-time workflows, performance-sensitive interfaces, and measurable business impact.',
     highlights: [
-      'Architected a Recovery Time Tracker in React and TypeScript for recovery drivers and operations staff with live location visibility.',
-      'Improved operational efficiency by 25% and reduced trip delays by 15% through better rendering and API data flows.',
-      'Built an E-Sign platform with in-browser PDF workflows, automated SMS updates, and CRM sync.',
-      'Reduced page load time from 3.9s to 2.1s on the E-Sign platform through code splitting and optimization.',
-      'Supported a workflow that handles 1,000+ weekly sessions.',
+      'Built a Recovery Time Tracker with real-time driver tracking via Google Maps API.',
+      'Built an E-Sign Platform with in-browser PDF display and multi-step signing workflows.',
+      'Reduced page load time by 46%, from 3.9s to 2.1s, through code splitting and optimization.',
+      'Improved operational efficiency by 25% and reduced trip delays by 15%.',
+      'Supported live production systems handling 1,000+ weekly sessions.',
+      'Replaced manual WhatsApp workflows with automated SMS updates and real-time CRM synchronization.',
+      'Achieved 2-second faster data retrieval compared with legacy CRM SQL queries.',
+      'Set up CI/CD on Render and worked closely with PMs, backend, and CRM teams.',
     ],
-    stack: ['React', 'TypeScript', 'React Query', 'Supabase', 'Google Maps API', 'REST APIs', 'Render'],
+    stack: ['React', 'TypeScript', 'Google Maps API', 'Supabase', 'REST APIs', 'Render', 'CI/CD'],
   },
   {
     company: 'BB Leads',
@@ -49,53 +53,68 @@ export const experiences: PortfolioExperience[] = [
     period: 'Apr 2023 - Dec 2023',
     location: 'Remote',
     summary:
-      'Delivered responsive, performance-focused websites and product UI work across client projects in collaboration with design and backend teams.',
+      'Sabith delivered responsive, accessible, and performance-minded web experiences across multiple client projects.',
     highlights: [
-      'Rebuilt a corporate website in React and improved Lighthouse performance from 62 to 89.',
-      'Shipped accessible, mobile-first interfaces across multiple client projects.',
-      'Implemented SEO improvements including structured data, semantic HTML, and meta optimization.',
-      'Managed deployments, domains, SSL, and CDN setup using Vercel.',
+      'Rebuilt the corporate website in React and raised Lighthouse score from 62 to 89.',
+      'Delivered responsive and accessible UI work across 5+ client projects.',
+      'Implemented SEO best practices that improved organic search visibility.',
+      'Managed Vercel deployments, SSL, CDN optimization, and performance monitoring.',
+      'Maintained component libraries and documentation across projects.',
     ],
-    stack: ['React', 'JavaScript', 'SEO', 'Accessibility', 'Vercel', 'Google Analytics'],
+    stack: ['React', 'JavaScript', 'Accessibility', 'SEO', 'Vercel', 'Component Libraries'],
   },
 ];
 
 export const projects: PortfolioProject[] = [
   {
+    slug: 'sabith-os',
+    title: 'SabithOS',
+    eyebrow: 'AI operating system',
+    description:
+      'An AI-powered autonomous job application system built like a company operating system, with agents for scouting, analysis, research, writing, compilation, and tracking.',
+    impact: 'Already found and scored 82 real ATS jobs, with 21 opportunities scoring 70+.',
+    tech: ['Next.js', 'TypeScript', 'SQLite', 'Docker', 'VPS Deployment', 'Groq Llama 3.3 70B', 'Claude Sonnet', 'GPT Codex'],
+    accentFrom: '#c4b5fd',
+    accentTo: '#38bdf8',
+    visualLabel: 'SO',
+    visibility: 'Personal system',
+    aliases: ['sabithos', 'sabith os', 'ai', 'agents', 'multi-agent', 'job system', 'job application system', 'ats'],
+  },
+  {
     slug: 'recovery-time-tracker',
     title: 'Recovery Time Tracker',
-    eyebrow: 'Internal operations platform',
+    eyebrow: 'Operations platform',
     description:
-      'A real-time tracking workspace for recovery drivers and operations staff, with live location views and session-aware data access.',
-    impact: 'Improved operational efficiency by 25% and helped reduce trip delays by 15%.',
-    tech: ['React', 'TypeScript', 'React Query', 'Supabase', 'Google Maps API'],
+      'A real-time operations tool for recovery drivers and ops staff, built around live tracking, better visibility, and faster coordination.',
+    impact: 'Improved operational efficiency by 25% and reduced trip delays by 15%.',
+    tech: ['React', 'TypeScript', 'Supabase', 'Google Maps API'],
     accentFrom: '#38bdf8',
     accentTo: '#0f766e',
-    visualLabel: 'RTT',
-    visibility: 'Internal product',
-    aliases: ['recovery', 'tracker', 'recovery time tracker', 'google maps'],
+    visualLabel: 'RT',
+    visibility: 'Live production',
+    aliases: ['recovery', 'tracker', 'recovery time tracker', 'google maps', 'driver tracking'],
   },
   {
     slug: 'e-sign-platform',
     title: 'E-Sign Platform',
-    eyebrow: 'Internal digital signing flow',
+    eyebrow: 'Signing workflow',
     description:
-      'A secure document-signing experience with in-browser PDF review, multi-step flows, automated notifications, and CRM synchronization.',
-    impact: 'Cut page load time from 3.9s to 2.1s and supports 1,000+ weekly sessions.',
-    tech: ['React', 'TypeScript', 'REST APIs', 'Workflow UX', 'Performance Optimization'],
+      'A secure digital signing platform with in-browser PDF display, multi-step workflows, automated updates, and CRM synchronization.',
+    impact: 'Cut load time by 46% and supports 1,000+ weekly sessions in production.',
+    tech: ['React', 'TypeScript', 'PDF Workflows', 'REST APIs', 'Performance Optimization'],
     accentFrom: '#f59e0b',
     accentTo: '#f97316',
     visualLabel: 'ES',
-    visibility: 'Internal product',
+    visibility: 'Live production',
     aliases: ['esign', 'e-sign', 'signature', 'pdf', 'crm', 'sms'],
   },
   {
     slug: 'task-management-dashboard',
     title: 'Task Management Dashboard',
-    eyebrow: 'Personal product build',
+    eyebrow: 'Productivity app',
     description:
-      'A task-focused dashboard with drag-and-drop flows, optimistic updates, local persistence, and polished performance.',
-    impact: 'Reached 95+ Lighthouse performance and shipped through automated Vercel deployment.',
+      'A full-featured dashboard with drag-and-drop interactions, React Query, optimistic UI updates, and a polished delivery setup.',
+    impact: 'Reached 95+ Lighthouse score and shipped through Vercel with CI/CD.',
     tech: ['React', 'TypeScript', 'React Query', 'Tailwind CSS', 'Vercel'],
     accentFrom: '#a78bfa',
     accentTo: '#6366f1',
@@ -108,19 +127,27 @@ export const projects: PortfolioProject[] = [
 export const skillGroups = [
   {
     label: 'Frontend',
-    items: ['React', 'TypeScript', 'JavaScript (ES6+)', 'HTML5', 'CSS3', 'Responsive Design', 'Tailwind CSS'],
+    items: ['React', 'TypeScript', 'JavaScript ES6+', 'HTML5', 'CSS3', 'Tailwind CSS'],
   },
   {
-    label: 'Data and State',
-    items: ['React Query', 'Context API', 'Zustand', 'REST APIs', 'Server State Management'],
+    label: 'State and Data',
+    items: ['React Query', 'Zustand', 'Context API', 'REST APIs'],
   },
   {
-    label: 'Delivery',
-    items: ['Vercel', 'Render', 'AWS S3/CloudFront', 'CI/CD', 'GitHub Actions', 'Supabase'],
+    label: 'Tools',
+    items: ['Git', 'Vite', 'Webpack', 'Figma', 'Storybook', 'Chrome DevTools', 'Postman'],
   },
   {
-    label: 'Strengths',
-    items: ['Performance Optimization', 'Component Design', 'Accessibility', 'SEO', 'Cross-team Collaboration'],
+    label: 'Infrastructure',
+    items: ['Vercel', 'AWS S3/CloudFront', 'Supabase', 'Render', 'GitHub Actions', 'Docker'],
+  },
+  {
+    label: 'Performance',
+    items: ['Code Splitting', 'Lazy Loading', 'Web Vitals', 'Lighthouse', 'Bundle Optimization'],
+  },
+  {
+    label: 'AI and Agents',
+    items: ['Prompt Engineering', 'Multi-model Pipelines', 'Agent Architecture'],
   },
 ];
 
@@ -128,68 +155,76 @@ export const faq: PortfolioFaq[] = [
   {
     question: 'What kind of roles fit Sabith best?',
     answer:
-      'Frontend engineering roles where product quality, performance, and collaboration matter, especially React and TypeScript teams shipping real user-facing workflows.',
+      'Software engineering roles with strong frontend ownership, real product work, and enough trust for engineers to take responsibility for quality and outcomes.',
   },
   {
-    question: 'Can this assistant answer unrelated questions?',
-    answer:
-      "No. It is intentionally limited to Sabith's background, projects, experience, skills, resume, and contact details.",
+    question: 'Where is Sabith open to work?',
+    answer: 'Sabith is open to strong opportunities in any country, not just the UAE or GCC.',
   },
   {
     question: 'How should someone reach out?',
-    answer: 'Email is the quickest path, and LinkedIn is also available for professional conversations.',
+    answer: 'Email, phone, and LinkedIn all work. Email is usually the fastest route for a recruiter or hiring manager.',
   },
 ];
 
 export const contact: PortfolioContact = {
   email: 'sabithmohamad1@gmail.com',
+  phone: '+971-552-428-080',
   github: 'https://github.com/sabithmohamad',
   linkedin: 'https://www.linkedin.com/in/mohammad-sabith-b95841185/',
   resumeHref: '/resume.pdf',
   actions: [
     { label: 'Resume', href: '/resume.pdf', kind: 'resume', note: 'Current PDF' },
-    { label: 'Email', href: 'mailto:sabithmohamad1@gmail.com', kind: 'email', note: 'Best for direct outreach' },
+    { label: 'Email', href: 'mailto:sabithmohamad1@gmail.com', kind: 'email', note: 'sabithmohamad1@gmail.com' },
     { label: 'LinkedIn', href: 'https://www.linkedin.com/in/mohammad-sabith-b95841185/', kind: 'external', note: 'Professional profile' },
-    { label: 'GitHub', href: 'https://github.com/sabithmohamad', kind: 'external', note: 'Code and repositories' },
   ],
 };
 
 export const starterPrompts = [
-  'Why should I hire you?',
-  'What is your experience?',
-  'Show me your main projects.',
+  'Why should I hire Sabith?',
+  "What is Sabith's experience?",
+  'Show me Sabith’s main projects.',
+];
+
+const directContactActions: ActionItem[] = [
+  { label: 'Email', href: `mailto:${contact.email}`, kind: 'email', note: contact.email },
+  { label: 'Phone', href: 'tel:+971552428080', kind: 'phone', note: contact.phone },
+  { label: 'LinkedIn', href: contact.linkedin, kind: 'external', note: 'Best for recruiter outreach' },
 ];
 
 const followupsByIntent: Record<PortfolioIntent, string[]> = {
-  about: ['What is your experience?', 'Show me your main projects.', 'How can I contact you?'],
-  experience: ['What did you build at Royal Swiss Auto Services?', 'Show me your main projects.', 'What do you specialize in?'],
-  projects: ['Tell me more about the E-Sign Platform.', 'What stack do you use most?', 'How can I contact you?'],
-  skills: ['What is your experience?', 'Show me your main projects.', 'How do you approach performance?'],
-  resume: ['Can I get a quick summary first?', 'What are your main projects?', 'How can I contact you?'],
-  contact: ['Can I see your resume?', 'What kind of work do you do?', 'Show me your projects.'],
-  availability: ['What is your experience?', 'How can I contact you?', 'Show me your main projects.'],
-  unknown: ['What is your experience?', 'Show me your main projects.', 'Why should I hire you?'],
+  about: ["What is Sabith's experience?", 'Show me Sabith’s main projects.', 'How can I contact Sabith?'],
+  experience: ['What did Sabith build at Royal Swiss Auto Services?', 'Tell me about SabithOS.', 'What does Sabith specialize in?'],
+  projects: ['Tell me more about SabithOS.', 'Tell me about the E-Sign Platform.', 'How can I contact Sabith?'],
+  skills: ["What is Sabith's experience?", 'What makes Sabith a strong hire?', 'How does Sabith approach performance?'],
+  resume: ['Can I get a quick summary first?', 'What are Sabith’s main projects?', 'How can I contact Sabith?'],
+  contact: ['Is Sabith open to work internationally?', 'Can I see Sabith’s resume?', 'What kind of work fits Sabith best?'],
+  availability: ['How can I contact Sabith?', "What is Sabith's experience?", 'Show me Sabith’s main projects.'],
+  unknown: ["What is Sabith's experience?", 'Show me Sabith’s main projects.', 'Why should I hire Sabith?'],
 };
 
 const hirePatterns = [
-  /\bwhy should (i|we) hire you\b/i,
-  /\bwhy hire you\b/i,
-  /\bwhy would (i|we) hire you\b/i,
-  /\bwhy are you a good fit\b/i,
-  /\bwhat makes you a good fit\b/i,
-  /\bwhy should (i|we) choose you\b/i,
+  /\bwhy should (i|we) hire (you|sabith)\b/i,
+  /\bwhy hire (you|sabith)\b/i,
+  /\bwhy would (i|we) hire (you|sabith)\b/i,
+  /\bwhy is (he|sabith) a good fit\b/i,
+  /\bwhat makes (him|sabith) a good fit\b/i,
+  /\bwhy should (i|we) choose (you|sabith)\b/i,
   /\bconvince me\b/i,
 ];
 
 const specialtyPatterns = [
+  /\bwhat does (he|sabith) specialize in\b/i,
   /\bwhat do you specialize in\b/i,
-  /\bwhat are your specialt(?:y|ies)\b/i,
-  /\bwhat are your specialit(?:y|ies)\b/i,
-  /\bwhat are your specalities\b/i,
+  /\bwhat are (his|your) specialt(?:y|ies)\b/i,
+  /\bwhat are (his|your) specialit(?:y|ies)\b/i,
+  /\bwhat are (his|your) specalities\b/i,
   /\bwhat are you best at\b/i,
-  /\bwhat is your edge\b/i,
-  /\bwhat do you bring to a team\b/i,
+  /\bwhat is (he|sabith) best at\b/i,
+  /\bwhat is (his|your) edge\b/i,
+  /\bwhat do (you|he|sabith) bring to a team\b/i,
   /\bwhat kind of engineer are you\b/i,
+  /\bwhat kind of engineer is (he|sabith)\b/i,
 ];
 
 const intentMatchers: Array<{ intent: PortfolioIntent; patterns: RegExp[] }> = [
@@ -199,15 +234,15 @@ const intentMatchers: Array<{ intent: PortfolioIntent; patterns: RegExp[] }> = [
   },
   {
     intent: 'contact',
-    patterns: [/\bcontact\b/i, /\bemail\b/i, /\breach\b/i, /\blinkedin\b/i, /\bgithub\b/i],
+    patterns: [/\bcontact\b/i, /\bemail\b/i, /\bphone\b/i, /\bcall\b/i, /\breach\b/i, /\blinkedin\b/i],
   },
   {
     intent: 'availability',
-    patterns: [/\bavailable\b/i, /\bavailability\b/i, /\bopen to work\b/i, /\bfreelance\b/i, /\brelocat/i],
+    patterns: [/\bavailable\b/i, /\bavailability\b/i, /\bopen to work\b/i, /\bfreelance\b/i, /\brelocat/i, /\bglobal\b/i, /\bworldwide\b/i, /\bany country\b/i],
   },
   {
     intent: 'projects',
-    patterns: [/\bproject/i, /\bbuild/i, /\bwork samples?\b/i, /\be-sign\b/i, /\brecovery\b/i, /\bdashboard\b/i],
+    patterns: [/\bproject/i, /\bbuild/i, /\bwork samples?\b/i, /\be-sign\b/i, /\brecovery\b/i, /\bdashboard\b/i, /\bsabithos\b/i, /\bagent/i],
   },
   {
     intent: 'skills',
@@ -221,6 +256,7 @@ const intentMatchers: Array<{ intent: PortfolioIntent; patterns: RegExp[] }> = [
       /\bspecialit(?:y|ies)\b/i,
       /\bspecalities\b/i,
       /\bfrontend\b/i,
+      /\bsoftware engineer\b/i,
     ],
   },
   {
@@ -229,7 +265,7 @@ const intentMatchers: Array<{ intent: PortfolioIntent; patterns: RegExp[] }> = [
   },
   {
     intent: 'about',
-    patterns: [/\babout\b/i, /\bwho are you\b/i, /\btell me about yourself\b/i, /\bintroduce yourself\b/i],
+    patterns: [/\babout\b/i, /\bwho are you\b/i, /\bwho is sabith\b/i, /\btell me about (him|sabith|yourself)\b/i, /\bintroduce (him|sabith|yourself)\b/i],
   },
 ];
 
@@ -279,40 +315,40 @@ const playfulRedirect = (message: string) => {
 
   if (isAiIdentityPrompt(message)) {
     return pickReply(message, [
-      `Call me Sabith with a fast silicon intern in the back room. The point of this page is still my work, so ask me about experience, projects, or why I might be a strong fit.`,
-      `Under the hood there is definitely some machine help, but the voice you are talking to is Sabith. I would rather talk about shipped work than start a model census.`,
-      `Think of it as Sabith in presentation mode with an AI co-pilot quietly carrying the cables. Ask me about my experience, products, or why I might be worth hiring.`,
+      `There is definitely some machine help here, but this assistant is really here to talk about Sabith. The more interesting question is what he has shipped and why teams trust him with product work.`,
+      `This page has an AI engine under the hood, but the subject is still Sabith. It is much more useful discussing his experience, projects, and hiring fit than starting a model family tree.`,
+      `Think of it as Sabith's portfolio with a very caffeinated digital colleague attached. Happy to talk about the work, the results, or why he might be worth hiring.`,
     ]);
   }
 
   if (/\b(weather|football|cricket|stocks|bitcoin|movie|song|recipe)\b/i.test(message)) {
     return pickReply(message, [
-      `I could fake being a universal oracle, but this page is much better at frontend engineering than weather, markets, or cricket predictions. Ask me about my work instead.`,
-      `That topic is outside my portfolio lane. If I start giving stock tips here, somebody should probably revoke my deploy access. Ask me about experience, projects, or fit.`,
-      `I stay in my lane here: shipped frontend work, product judgment, performance, and hiring fit. For everything else, the internet has enough confident strangers already.`,
+      `That topic is outside Sabith's portfolio lane. This assistant is much stronger on shipped software, product judgment, and frontend-heavy systems than weather or market predictions.`,
+      `If this page starts giving stock picks, Sabith probably needs to revoke its deployment rights. It is much better used for experience, projects, or hiring-fit questions.`,
+      `This assistant stays in its lane on purpose: Sabith's work, strengths, and trajectory. For everything else, the internet already has enough loud opinions.`,
     ]);
   }
 
   if (/\bjoke\b/i.test(message)) {
     return pickReply(message, [
-      `My favorite joke is still shaving seconds off a dashboard before someone suggests a meeting about it. If you want the serious version, ask me about the products I built.`,
-      `I work in frontend, so my comedy mostly looks like fixing performance before the loading spinner gets promoted. Ask me about the actual shipped work.`,
-      `The punchline is usually performance debt. If you want something more useful, ask me about my projects, experience, or why I would be a good fit.`,
+      `Sabith's idea of comedy is usually cutting seconds off a page before anyone schedules a meeting about performance. If useful, this assistant can switch back to the serious version and talk about his work.`,
+      `The safest joke here is that loading spinners and legacy workflows are both slightly afraid of Sabith. Happy to talk about the real projects behind that.`,
+      `Most of the humor in Sabith's world comes from watching performance debt disappear. If helpful, this assistant can turn that into actual project examples.`,
     ]);
   }
 
   if (/\b(can you|could you|help me with|tell me about)\b/i.test(message) && compactTopic) {
     return pickReply(message, [
-      `"${compactTopic}" is slightly outside what this page is tuned for. I am much more useful when the topic is frontend work, shipped products, or why I might be a strong hire.`,
-      `I could improvise on "${compactTopic}", but I would be much sharper talking through the products I built, how I work, or the kind of frontend problems I solve well.`,
-      `That asks me to step outside my portfolio lane. If you want the high-signal version of me, ask about product UI, performance, collaboration, or fit.`,
+      `"${compactTopic}" is a bit outside this assistant's lane. It becomes much sharper when the topic is Sabith's experience, projects, or why he might be a strong hire.`,
+      `This assistant could improvise on "${compactTopic}", but it is significantly more useful when the conversation stays on Sabith's work, systems thinking, and product impact.`,
+      `That topic sits outside the portfolio scope. For the high-signal version, ask about Sabith's shipped work, engineering strengths, or fit.`,
     ]);
   }
 
   return pickReply(message, [
-    `That is a little outside my portfolio lane. If I answered everything on earth, I would need a much bigger navbar. Ask me about my experience, projects, skills, or hiring fit.`,
-    `I keep this page focused on my work. The shorter version is: ask me about what I built, how I work, or why I might be worth a conversation.`,
-    `I am intentionally opinionated here: less random trivia, more signal about my work. Ask me about experience, projects, skills, or why I would be a strong hire.`,
+    `That is a little outside the portfolio scope. This assistant is intentionally tuned to talk about Sabith's work, strengths, and hiring fit, not to become a universal answer machine.`,
+    `This page keeps the signal narrow on purpose: Sabith's experience, projects, and what he brings to a team. That is where the answers will be strongest.`,
+    `That question steps outside Sabith's portfolio lane. The better use of this assistant is asking about his experience, projects, specialties, or availability.`,
   ]);
 };
 
@@ -365,8 +401,8 @@ const getReferencedExperience = (message: string) => {
 export const getUiBlocksForIntent = (intent: PortfolioIntent, message: string): ChatUiBlock[] => {
   if (isHirePrompt(message)) {
     return [
-      { type: 'metrics', title: 'Why I am a strong fit', items: profile.metrics },
-      { type: 'actions', title: 'Next step', items: contact.actions.slice(0, 2) },
+      { type: 'metrics', title: 'Why Sabith stands out', items: profile.metrics },
+      { type: 'actions', title: 'Reach out directly', items: directContactActions },
     ];
   }
 
@@ -413,11 +449,11 @@ export const getUiBlocksForIntent = (intent: PortfolioIntent, message: string): 
         },
       ];
     case 'resume':
-      return [{ type: 'actions', title: 'Resume and links', items: contact.actions.slice(0, 2) }];
+      return [{ type: 'actions', title: 'Resume and direct links', items: [...contact.actions, directContactActions[1]] }];
     case 'contact':
-      return [{ type: 'actions', title: 'Direct contact', items: contact.actions }];
+      return [{ type: 'actions', title: 'Direct contact', items: directContactActions }];
     case 'availability':
-      return [{ type: 'actions', title: 'Best next step', items: contact.actions.slice(0, 3) }];
+      return [{ type: 'actions', title: 'Best next step', items: [...directContactActions, contact.actions[0]] }];
     default:
       return [];
   }
@@ -433,46 +469,46 @@ export const buildDonePayload = (intent: PortfolioIntent, message: string): Chat
 
 export const generateFallbackAnswer = (intent: PortfolioIntent, message: string) => {
   if (isHirePrompt(message)) {
-    return `The reason to hire me is not just that I can build screens. It is that I usually sit in the overlap between product judgment and frontend execution. I pay attention to how the interface feels, how the data flows, where performance starts to drag, and whether the solution actually reduces friction for the people using it.\n\nThat matters because the pattern shows up in outcomes, not just implementation details: a recovery workflow that improved operational efficiency by 25%, a signing flow that went from 3.9s to 2.1s, and products supporting 1,000+ weekly sessions. So the value I bring is usually a calmer product, stronger frontend quality, and less drag for the team after launch.`;
+    return `The case for hiring Sabith is that he brings more than clean UI implementation. He tends to operate in the overlap between product judgment and frontend execution, which means he pays attention to how the interface feels, how the data moves, where performance starts to drag, and whether the solution actually reduces friction for the people using it.\n\nThat shows up in outcomes, not just tech choices: 25% higher operational efficiency, a 46% load-time improvement on a production signing flow, and systems supporting 1,000+ weekly sessions. He is the kind of engineer who helps a team ship something calmer, faster, and easier to trust after launch.`;
   }
 
   switch (intent) {
     case 'about':
-      return `I'm Mohammad Sabith, a frontend engineer with ${profile.yearsExperience} building React and TypeScript products. Most of my recent work centers on performance, API-heavy workflows, and interfaces that create visible business impact.\n\nMy strongest story is product-focused frontend work: internal platforms, measurable performance gains, and collaborative delivery with designers, backend teams, and operations stakeholders.`;
+      return `This is Sabith's portfolio assistant. Sabith is a Software Engineer with ${profile.yearsExperience} of production experience, based in ${profile.location}, with strong depth in React and TypeScript.\n\nThe short version is that he has shipped real systems used by real users, cares about product quality and performance, and is currently open to strong opportunities in any country.`;
     case 'experience': {
       const focusedExperience = getReferencedExperience(message);
       const lead = focusedExperience[0];
 
       if (!lead) {
-        return `I have ${profile.yearsExperience} of frontend experience, mainly in React and TypeScript. My recent work spans internal operations tools, digital workflow products, performance optimization, and client-facing product delivery.`;
+        return `Sabith has ${profile.yearsExperience} of production experience, with a background centered on React, TypeScript, performance optimization, and workflow-heavy product interfaces. His recent work spans internal systems, SEO/performance improvements, and production-grade frontend delivery.`;
       }
 
-      return `I have ${profile.yearsExperience} of frontend experience, with recent work at ${lead.company}. In that role, I focused on modern React and TypeScript products, real-time or API-driven workflows, and shipping features that improved how teams actually operate.\n\nA few concrete outcomes are 25% higher operational efficiency, a 46% improvement in page load time on a signing workflow, and products supporting 1,000+ weekly sessions.`;
+      return `Sabith has ${profile.yearsExperience} of production experience, and his recent work at ${lead.company} is a strong example of how he operates. He has been building real-time and workflow-heavy products, improving performance, and shipping interfaces that affect day-to-day business operations.\n\nA few concrete outcomes are 25% higher operational efficiency, 15% fewer trip delays, a 46% load-time improvement, and production systems handling 1,000+ weekly sessions.`;
     }
     case 'projects': {
       const focusedProjects = getReferencedProjects(message);
 
       if (focusedProjects.length === 1) {
         const [project] = focusedProjects;
-        return `${project.title} is one of the strongest examples of my work. ${project.description} The main result was that it ${project.impact.toLowerCase()}\n\nThe stack was centered on ${joinList(project.tech)}, and the product work stayed focused on practical outcomes rather than extra complexity.`;
+        return `${project.title} is one of the clearest examples of Sabith's work. ${project.description}\n\nThe result is straightforward: ${project.impact} It also shows the kind of systems thinking he brings when a product has to feel polished without becoming overengineered.`;
       }
 
-      return `The three projects I'd highlight first are ${joinList(
+      return `The main projects worth starting with are ${joinList(
         focusedProjects.map(project => project.title),
-      )}. Together they show a mix of internal product work, workflow design, performance optimization, and polished frontend execution.\n\nIf you want, I can go deeper into any one of them and break down the problem, stack, and outcome.`;
+      )}. Together they show production delivery, performance work, operational workflow design, and some real system-thinking beyond standard portfolio demos.\n\nIf there is one to go deeper on first, SabithOS is probably the best showcase of ambition and architecture, while the Royal Swiss products are the best proof of production impact.`;
     }
     case 'skills':
       if (isSpecialtyPrompt(message)) {
-        return `What I specialize in is frontend work where polish alone is not enough. I am strongest when the UI has real data, messy business rules, performance pressure, and a team that still needs the codebase to stay understandable after launch.\n\nSo if I describe it the honest way, my lane is React and TypeScript product work that feels clean for users, behaves reliably under real usage, and stays practical for the team maintaining it. That usually means performance tuning, API-heavy workflows, reusable UI structure, and turning complex operational needs into a calmer interface.`;
+        return `Sabith's strongest lane is software engineering with heavy frontend ownership, especially when the product has real data, messy workflows, performance constraints, and users who actually depend on it.\n\nIn practical terms, that means React and TypeScript systems, API-heavy interfaces, performance tuning, and turning complicated operational requirements into something clearer and more reliable for both users and the team maintaining it.`;
       }
 
-      return `My core strengths are React, TypeScript, API-heavy product UI, and performance-minded frontend architecture. I tend to do my best work where the interface has to be clean for users, but also resilient enough for a real product team to keep building on.\n\nThat usually translates into component systems, data flow design, performance tuning, responsive UI work, and making complicated workflows feel simpler than they actually are.`;
+      return `Sabith's core strengths are React, TypeScript, product-focused frontend engineering, and performance-minded delivery. He is especially strong when a team needs someone who can take a workflow with real business complexity and turn it into a clean, usable product without losing engineering discipline.`;
     case 'resume':
-      return `You can open the latest resume directly from the resume action on the page. If you want a quick summary first, I can also give you the short version of my experience, strengths, and current project highlights right here.`;
+      return `The latest resume is available directly from the resume action on the page. If helpful, this assistant can also give a short recruiter-friendly summary before someone opens the PDF.`;
     case 'contact':
-      return `The fastest way to reach me is by email at ${contact.email}. You can also use LinkedIn if that is more convenient.\n\nIf you want, I can also point you to the resume or summarize the work that is most relevant before you reach out.`;
+      return `The best ways to reach Sabith are email at ${contact.email}, phone at ${contact.phone}, and LinkedIn at ${contact.linkedin}.\n\nIf there is genuine hiring interest, reaching out directly is the right move. This assistant can also summarize the most relevant work first if that helps.`;
     case 'availability':
-      return `The best way to discuss current availability is to reach out directly by email or LinkedIn. That keeps the conversation accurate and up to date while still giving you a quick path to my resume and project background.`;
+      return `Sabith is open to strong opportunities in any country. He is especially interested in teams doing real product work with a solid stack, good engineering standards, and genuine ownership rather than maintenance-only roles.`;
     default:
       return playfulRedirect(message);
   }
@@ -480,8 +516,9 @@ export const generateFallbackAnswer = (intent: PortfolioIntent, message: string)
 
 export const buildIntentContext = (intent: PortfolioIntent, message: string) => {
   const sections = [
-    `Identity:\n- You are Mohammad Sabith.\n- Speak in first person.\n- If asked who you are, say you are Mohammad Sabith, a frontend engineer based in ${profile.location}.`,
+    `Identity:\n- You are Sabith's personal AI portfolio assistant.\n- Always refer to Sabith in third person.\n- If asked who you are, say you are Sabith's portfolio assistant.\n- If asked who Sabith is, say he is a Software Engineer based in ${profile.location}.`,
     `Profile:\n- Name: ${profile.name}\n- Role: ${profile.role}\n- Location: ${profile.location}\n- Summary: ${profile.summary}`,
+    `What Sabith is looking for:\n- Strong software engineering opportunities\n- Real product work with a good stack\n- Teams where growth and ownership are real\n- Open to work in any country`,
   ];
 
   if (intent === 'about' || intent === 'experience' || isHirePrompt(message)) {
@@ -514,7 +551,7 @@ export const buildIntentContext = (intent: PortfolioIntent, message: string) => 
 
   if (intent === 'resume' || intent === 'contact' || intent === 'availability' || isHirePrompt(message)) {
     sections.push(
-      `Contact:\n- Email: ${contact.email}\n- LinkedIn: ${contact.linkedin}\n- GitHub: ${contact.github}\n- Resume: ${contact.resumeHref}`,
+      `Contact:\n- Email: ${contact.email}\n- Phone: ${contact.phone}\n- LinkedIn: ${contact.linkedin}\n- GitHub: ${contact.github}\n- Resume: ${contact.resumeHref}`,
     );
   }
 

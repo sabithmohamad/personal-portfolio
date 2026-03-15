@@ -38,7 +38,7 @@ export interface TimelineItem {
 export interface ActionItem {
   label: string;
   href: string;
-  kind: 'email' | 'resume' | 'external';
+  kind: 'email' | 'resume' | 'external' | 'phone';
   note?: string;
 }
 
@@ -128,6 +128,7 @@ export interface PortfolioFaq {
 
 export interface PortfolioContact {
   email: string;
+  phone: string;
   github: string;
   linkedin: string;
   resumeHref: string;

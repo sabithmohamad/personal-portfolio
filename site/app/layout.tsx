@@ -3,9 +3,9 @@ import type { Metadata } from 'next';
 import './globals.css';
 
 export const metadata: Metadata = {
-  title: 'Mohammad Sabith | Frontend Engineer',
+  title: 'Mohammad Sabith | Software Engineer',
   description:
-    'A chat-first portfolio for Mohammad Sabith, a frontend engineer focused on React, TypeScript, performance, and product-minded UI.',
+    'A chat-first portfolio for Mohammad Sabith, a software engineer with 3+ years of production experience specializing in React, TypeScript, performance, and product-minded systems.',
   icons: {
     icon: [{ url: '/favicon.svg?v=4', type: 'image/svg+xml' }],
     shortcut: '/favicon.svg?v=4',

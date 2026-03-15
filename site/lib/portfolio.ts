@@ -1,3 +1,7 @@
+export * from '@/lib/portfolio-data';
+
+/*
+
 import type {
   ApiChatMessage,
   ChatDonePayload,
@@ -420,3 +424,5 @@ export const buildConversationTranscript = (messages: ApiChatMessage[]) =>
     .slice(-6)
     .map(message => `${message.role === 'user' ? 'User' : 'Assistant'}: ${message.content}`)
     .join('\n');
+
+*/
