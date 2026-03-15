@@ -2,16 +2,10 @@
 
 import { useEffect, useMemo, useRef, useState } from 'react';
 
-import { contact, profile, starterPrompts } from '@/lib/portfolio-data';
+import { contact, starterPrompts } from '@/lib/portfolio-data';
 import { RichBlocks } from '@/components/rich-blocks';
 import { SabithMarkIcon } from '@/components/sabith-mark';
 import type { ApiChatMessage, ChatDonePayload, ChatMessage } from '@/types/chat';
-
-const initialHighlights = [
-  `${profile.yearsExperience} building product UI`,
-  'React and TypeScript',
-  'Performance-minded delivery',
-];
 
 const responseLoaderSteps = [
   'Reading Sabith context',
@@ -77,6 +71,7 @@ export function ChatApp() {
   const [draft, setDraft] = useState('');
   const [isStreaming, setIsStreaming] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [visitorCount, setVisitorCount] = useState<number | null>(null);
   const transcriptViewportRef = useRef<HTMLDivElement | null>(null);
   const transcriptEndRef = useRef<HTMLDivElement | null>(null);
   const textareaRef = useRef<HTMLTextAreaElement | null>(null);
@@ -114,6 +109,37 @@ export function ChatApp() {
     node.style.height = '0px';
     node.style.height = `${Math.min(node.scrollHeight, 220)}px`;
   }, [draft]);
+
+  useEffect(() => {
+    let cancelled = false;
+
+    const loadVisitorCount = async () => {
+      try {
+        const response = await fetch('/api/visitors', {
+          cache: 'no-store',
+          method: 'GET',
+        });
+
+        if (!response.ok) {
+          return;
+        }
+
+        const payload = (await response.json()) as { count?: number };
+
+        if (!cancelled && typeof payload.count === 'number') {
+          setVisitorCount(payload.count);
+        }
+      } catch {
+        // Quietly ignore visitor count errors so the chat UI stays focused.
+      }
+    };
+
+    void loadVisitorCount();
+
+    return () => {
+      cancelled = true;
+    };
+  }, []);
 
   const updateAssistantMessage = (assistantId: string, updater: (message: ChatMessage) => ChatMessage) => {
     setMessages(current =>
@@ -271,50 +297,20 @@ export function ChatApp() {
               <button className="rail-button" type="button">
                 <SabithMarkIcon className="h-6 w-6" />
               </button>
-              <div className="space-y-3">
-                <button className="rail-button" type="button">
-                  <PanelsIcon />
-                </button>
-                <button className="rail-button" type="button">
-                  <ChatIcon />
-                </button>
-              </div>
-              <div className="rail-status">
-                <span className="signal-dot" />
-                <span>Live</span>
-              </div>
             </aside>
 
             <section className="content-frame flex min-h-0 flex-1 flex-col overflow-hidden">
               {!hasConversation ? (
                 <div className="landing-screen">
-                  <div className="landing-stack">
-                    <div className="hero-column-glow">
-                      <div className="hero-mark">
-                        <SabithMarkIcon animated className="h-10 w-10" />
-                      </div>
-                    </div>
-
-                    <div className="tiny-chip">Sabith&apos;s portfolio assistant</div>
-
-                    <div className="landing-copy">
+                  <div className="landing-hero">
+                    <div className="landing-stack">
                       <h1 className="landing-title text-balance font-semibold tracking-[-0.05em] text-ink">
                         Good to see you. Ask Sabith anything.
                       </h1>
-
-                      <p className="landing-subtitle text-balance text-mist">
-                        Experience, shipped frontend work, performance wins, product judgment, or why I might be a strong hire.
-                      </p>
                     </div>
+                  </div>
 
-                    <div className="landing-highlights">
-                      {initialHighlights.map(highlight => (
-                        <span key={highlight} className="badge-pill">
-                          {highlight}
-                        </span>
-                      ))}
-                    </div>
-
+                  <div className="composer-dock landing-dock">
                     <div className="landing-composer">
                       <Composer
                         draft={draft}
@@ -328,19 +324,7 @@ export function ChatApp() {
                         statusLabel="Portfolio scope active"
                         textareaRef={textareaRef}
                       />
-                    </div>
-
-                    <div className="footer-link-row mobile-landing-actions">
-                      {fixedActions.map(action => (
-                        <a
-                          key={action.label}
-                          className="footer-link"
-                          href={action.href}
-                          rel={action.kind === 'external' ? 'noreferrer' : undefined}
-                          target={action.kind === 'external' ? '_blank' : undefined}>
-                          {action.label}
-                        </a>
-                      ))}
+                      <VisitorCount count={visitorCount} align="center" />
                     </div>
                   </div>
                 </div>
@@ -349,7 +333,7 @@ export function ChatApp() {
                   <div className="transcript-fade" />
 
                   <div
-                    className="flex-1 overflow-y-auto px-4 pb-4 pt-5 sm:px-8 sm:pb-6 sm:pt-8"
+                    className="chat-scroll-area flex-1 overflow-y-auto px-4 pb-4 pt-5 sm:px-8 sm:pb-6 sm:pt-8"
                     ref={transcriptViewportRef}>
                     <div aria-live="polite" className="mx-auto max-w-4xl space-y-6">
                       <div className="conversation-intro">
@@ -402,7 +386,7 @@ export function ChatApp() {
                     </div>
                   </div>
 
-                  <div className="border-t border-white/[0.06] bg-[#0d1015] px-4 pb-4 pt-4 sm:px-8 sm:pb-6">
+                  <div className="composer-dock conversation-dock">
                     <div className="mx-auto max-w-4xl">
                       <Composer
                         draft={draft}
@@ -414,13 +398,16 @@ export function ChatApp() {
                         placeholder="Keep the conversation focused on experience, projects, skills, or fit."
                         statusLabel="Grounded on Sabith's real work"
                         textareaRef={textareaRef}
+                        variant="conversation"
                       />
 
-                      <div className="mt-3 flex flex-wrap items-center gap-3 text-[11px] uppercase tracking-[0.24em] text-slate">
+                      <div className="conversation-meta mt-3 flex flex-wrap items-center gap-3 text-[11px] uppercase tracking-[0.24em] text-slate">
                         {conversationMeta.map(item => (
                           <span key={item}>{item}</span>
                         ))}
                       </div>
+
+                      <VisitorCount count={visitorCount} />
 
                       {error ? <p className="mt-3 text-sm text-orange-200/90">{error}</p> : null}
                     </div>
@@ -442,27 +429,7 @@ interface BrowserChromeProps {
 function BrowserChrome({ actions }: BrowserChromeProps) {
   return (
     <header className="browser-chrome">
-      <div className="flex items-center gap-4">
-        <div className="hidden items-center gap-2 sm:flex">
-          <span className="traffic-dot bg-[#ff6b63]" />
-          <span className="traffic-dot bg-[#f7c65a]" />
-          <span className="traffic-dot bg-[#44cf6c]" />
-        </div>
-
-        <div className="hidden items-center gap-2 text-slate sm:flex">
-          <button className="chrome-icon-button" type="button">
-            <ChevronLeftIcon />
-          </button>
-          <button className="chrome-icon-button" type="button">
-            <ChevronRightIcon />
-          </button>
-        </div>
-      </div>
-
-      <div className="address-pill">
-        <LockIcon />
-        <span>{profile.shortName.toLowerCase()} / portfolio</span>
-      </div>
+      <div className="browser-chrome-spacer" />
 
       <div className="hidden items-center gap-2 md:flex">
         {actions.map(action => (
@@ -491,6 +458,7 @@ interface ComposerProps {
   prompts?: string[];
   statusLabel: string;
   textareaRef: React.RefObject<HTMLTextAreaElement | null>;
+  variant?: 'landing' | 'conversation';
 }
 
 function Composer({
@@ -504,30 +472,31 @@ function Composer({
   prompts,
   statusLabel,
   textareaRef,
+  variant = 'landing',
 }: ComposerProps) {
+  const isConversation = variant === 'conversation';
+
   return (
     <div>
-      <div className="composer-panel p-4 sm:p-5">
-        <div className="flex flex-wrap items-center justify-between gap-3 border-b border-white/[0.06] pb-3 text-[11px] uppercase tracking-[0.24em] text-slate">
-          <span className="inline-flex items-center gap-2">
-            <BoltIcon />
-            <span>{statusLabel}</span>
-          </span>
-          <span className="inline-flex items-center gap-2">
-            <span className="signal-dot" />
-            <span>Sabith online</span>
-          </span>
-        </div>
+      <div className={`composer-panel ${isConversation ? 'composer-panel-compact p-3 sm:p-4' : 'p-4 sm:p-5'}`}>
+        {!isConversation ? (
+          <div className="flex flex-wrap items-center justify-between gap-3 border-b border-white/[0.06] pb-3 text-[11px] uppercase tracking-[0.24em] text-slate">
+            <span className="inline-flex items-center gap-2">
+              <BoltIcon />
+              <span>{statusLabel}</span>
+            </span>
+            <span className="inline-flex items-center gap-2">
+              <span className="signal-dot" />
+              <span>Sabith online</span>
+            </span>
+          </div>
+        ) : null}
 
-        <form className="mt-4" onSubmit={onSubmit}>
+        <form className={isConversation ? '' : 'mt-4'} onSubmit={onSubmit}>
           <div className="composer-input-shell">
-            <div className="composer-leading">
-              <PlusIcon />
-            </div>
-
             <textarea
               aria-label="Ask about Sabith's portfolio"
-              className="min-h-[64px] w-full bg-transparent pr-3 text-base leading-7 text-ink outline-none placeholder:text-slate"
+              className={`w-full bg-transparent pr-3 text-base leading-7 text-ink outline-none placeholder:text-slate ${isConversation ? 'min-h-[54px]' : 'min-h-[64px]'}`}
               onChange={event => onDraftChange(event.target.value)}
               onKeyDown={onKeyDown}
               placeholder={placeholder}
@@ -588,11 +557,15 @@ function ResponseLoader({ compact = false }: { compact?: boolean }) {
   );
 }
 
-function PlusIcon() {
+function VisitorCount({ align = 'left', count }: { align?: 'left' | 'center'; count: number | null }) {
+  if (count === null) {
+    return null;
+  }
+
   return (
-    <svg aria-hidden="true" className="h-4 w-4" fill="none" viewBox="0 0 24 24">
-      <path d="M12 5v14M5 12h14" stroke="currentColor" strokeLinecap="round" strokeWidth="1.6" />
-    </svg>
+    <p className={`visitor-count ${align === 'center' ? 'text-center' : 'text-left'}`}>
+      visitors: {new Intl.NumberFormat('en-US').format(count)}
+    </p>
   );
 }
 
@@ -619,52 +592,6 @@ function BoltIcon() {
   return (
     <svg aria-hidden="true" className="h-4 w-4" fill="none" viewBox="0 0 24 24">
       <path d="M13 2L6 13h5l-1 9 8-12h-5l0-8z" fill="currentColor" />
-    </svg>
-  );
-}
-
-function PanelsIcon() {
-  return (
-    <svg aria-hidden="true" className="h-4 w-4" fill="none" viewBox="0 0 24 24">
-      <rect height="14" rx="3" stroke="currentColor" width="18" x="3" y="5" />
-      <path d="M9 5v14" stroke="currentColor" />
-    </svg>
-  );
-}
-
-function ChatIcon() {
-  return (
-    <svg aria-hidden="true" className="h-4 w-4" fill="none" viewBox="0 0 24 24">
-      <path
-        d="M6 8.5A3.5 3.5 0 019.5 5h5A3.5 3.5 0 0118 8.5v4A3.5 3.5 0 0114.5 16H11l-4 3v-3.3A3.5 3.5 0 016 12.5v-4z"
-        stroke="currentColor"
-        strokeLinejoin="round"
-      />
-    </svg>
-  );
-}
-
-function LockIcon() {
-  return (
-    <svg aria-hidden="true" className="h-4 w-4" fill="none" viewBox="0 0 24 24">
-      <path d="M8 10V8a4 4 0 118 0v2" stroke="currentColor" strokeLinecap="round" strokeWidth="1.5" />
-      <rect height="9" rx="2.5" stroke="currentColor" width="12" x="6" y="10" />
-    </svg>
-  );
-}
-
-function ChevronLeftIcon() {
-  return (
-    <svg aria-hidden="true" className="h-4 w-4" fill="none" viewBox="0 0 24 24">
-      <path d="M14.5 6.5L9 12l5.5 5.5" stroke="currentColor" strokeLinecap="round" strokeWidth="1.5" />
-    </svg>
-  );
-}
-
-function ChevronRightIcon() {
-  return (
-    <svg aria-hidden="true" className="h-4 w-4" fill="none" viewBox="0 0 24 24">
-      <path d="M9.5 6.5L15 12l-5.5 5.5" stroke="currentColor" strokeLinecap="round" strokeWidth="1.5" />
     </svg>
   );
 }

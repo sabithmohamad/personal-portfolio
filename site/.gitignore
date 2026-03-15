@@ -18,5 +18,9 @@ out/
 .next-start.err.log
 .vercel-*.log
 *.tsbuildinfo
+.data/
+visitor-cookies.txt
+
+.vercel
 
 .vercel
