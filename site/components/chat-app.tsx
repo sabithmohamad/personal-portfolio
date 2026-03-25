@@ -1,18 +1,16 @@
 'use client';
 
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { type CSSProperties, useEffect, useMemo, useRef, useState } from 'react';
 
 import { contact, starterPrompts } from '@/lib/portfolio-data';
 import { SabithMarkIcon } from '@/components/sabith-mark';
-import type { ApiChatMessage, ChatDonePayload, ChatMessage } from '@/types/chat';
+import type { ApiChatMessage, ChatDonePayload, ChatMessage, ChatUiBlock } from '@/types/chat';
 
 const responseLoaderSteps = [
   'Reading Sabith context',
   'Picking the strongest proof points',
   'Writing a sharp reply',
 ];
-
-const heroPhrases = ['shipped products.', 'performance wins.', 'system thinking.'];
 
 const generateId = () => {
   if (typeof crypto !== 'undefined' && 'randomUUID' in crypto) {
@@ -239,6 +237,8 @@ export function ChatApp() {
               updateAssistantMessage(assistantId, current => ({
                 ...current,
                 status: 'done',
+                uiBlocks: payload.uiBlocks,
+                suggestedFollowups: payload.suggestedFollowups,
               }));
             },
             onError: message => {
@@ -297,26 +297,17 @@ export function ChatApp() {
           <BrowserChrome actions={fixedActions} />
 
           <div className="app-body flex min-h-0 flex-1">
-            <div className="floating-mark hidden md:flex" aria-hidden="true">
-              <button className="rail-button" type="button">
-                <SabithMarkIcon animated className="h-6 w-6" />
-              </button>
-            </div>
-
             <section className="content-frame flex min-h-0 flex-1 flex-col overflow-hidden">
               {!hasConversation ? (
                 <div className="landing-screen">
                   <div className="landing-hero">
                     <div className="landing-stack">
                       <div className="landing-title-shell">
-                        <p className="landing-kicker">Sabith, through the work</p>
-                        <h1 className="landing-title text-balance font-semibold tracking-[-0.05em] text-ink">
-                          <span className="landing-title-static">Start with</span>
-                          <RotatingHeroPhrase phrases={heroPhrases} />
+                        <span className="welcome-chip">Portfolio assistant</span>
+                        <h1 className="welcome-title text-balance">
+                          <SabithMarkIcon animated className="welcome-mark h-8 w-8" />
+                          <span>Welcome Unknown</span>
                         </h1>
-                        <p className="landing-subtitle text-balance text-mist">
-                          Ask about what shipped, what improved, and how Sabith thinks when the stakes are real.
-                        </p>
                       </div>
                     </div>
                   </div>
@@ -330,9 +321,8 @@ export function ChatApp() {
                         onKeyDown={onComposerKeyDown}
                         onPromptSelect={onPromptSelect}
                         onSubmit={onSubmit}
-                        placeholder="Ask about experience, projects, hiring fit, or how to reach me."
+                        placeholder="What do you want to know about Sabith?"
                         prompts={starterPrompts}
-                        statusLabel="Portfolio scope active"
                         textareaRef={textareaRef}
                       />
                       <VisitorCount count={visitorCount} align="center" />
@@ -366,6 +356,7 @@ export function ChatApp() {
                               {message.content ? (
                                 <>
                                   <p className="whitespace-pre-wrap text-[15px] leading-7 text-inherit">{message.content}</p>
+                                  {isAssistant ? <MessageProjectBlocks blocks={message.uiBlocks} /> : null}
                                   {message.status === 'streaming' ? <ResponseLoader compact /> : null}
                                 </>
                               ) : message.status === 'streaming' ? (
@@ -390,7 +381,6 @@ export function ChatApp() {
                         onPromptSelect={onPromptSelect}
                         onSubmit={onSubmit}
                         placeholder="Keep the conversation focused on experience, projects, skills, or fit."
-                        statusLabel="Grounded on Sabith's real work"
                         textareaRef={textareaRef}
                         variant="conversation"
                       />
@@ -410,66 +400,36 @@ export function ChatApp() {
   );
 }
 
-function RotatingHeroPhrase({ phrases }: { phrases: string[] }) {
-  const [activeIndex, setActiveIndex] = useState(0);
-  const [nextIndex, setNextIndex] = useState<number | null>(null);
-  const [reducedMotion, setReducedMotion] = useState(true);
+function MessageProjectBlocks({ blocks }: { blocks?: ChatUiBlock[] }) {
+  const projectBlock = blocks?.find(block => block.type === 'projects');
 
-  useEffect(() => {
-    const media = window.matchMedia('(prefers-reduced-motion: reduce)');
-    const legacyMedia = media as MediaQueryList & {
-      addListener?: (listener: (event: MediaQueryListEvent) => void) => void;
-      removeListener?: (listener: (event: MediaQueryListEvent) => void) => void;
-    };
-    const syncPreference = () => setReducedMotion(media.matches);
-
-    syncPreference();
-
-    if ('addEventListener' in media) {
-      media.addEventListener('change', syncPreference);
-
-      return () => media.removeEventListener('change', syncPreference);
-    }
-
-    legacyMedia.addListener?.(syncPreference);
-
-    return () => legacyMedia.removeListener?.(syncPreference);
-  }, []);
-
-  useEffect(() => {
-    if (reducedMotion || nextIndex !== null) {
-      return;
-    }
-
-    const timeout = window.setTimeout(() => {
-      setNextIndex((activeIndex + 1) % phrases.length);
-    }, 2600);
-
-    return () => window.clearTimeout(timeout);
-  }, [activeIndex, nextIndex, phrases.length, reducedMotion]);
-
-  useEffect(() => {
-    if (nextIndex === null) {
-      return;
-    }
-
-    const timeout = window.setTimeout(() => {
-      setActiveIndex(nextIndex);
-      setNextIndex(null);
-    }, 420);
-
-    return () => window.clearTimeout(timeout);
-  }, [nextIndex]);
-
-  const upcomingPhrase = phrases[nextIndex ?? (activeIndex + 1) % phrases.length];
+  if (!projectBlock || projectBlock.type !== 'projects' || projectBlock.items.length === 0) {
+    return null;
+  }
 
   return (
-    <span className={`landing-title-dynamic-shell ${nextIndex !== null ? 'is-switching' : ''}`}>
-      <span className="landing-title-dynamic current">{phrases[activeIndex]}</span>
-      <span aria-hidden="true" className="landing-title-dynamic next">
-        {upcomingPhrase}
-      </span>
-    </span>
+    <div className="project-cards-grid">
+      {projectBlock.items.map(project => (
+        <article
+          key={project.title}
+          className="project-card"
+          style={
+            {
+              '--project-accent-from': project.accentFrom,
+              '--project-accent-to': project.accentTo,
+            } as CSSProperties
+          }>
+          <div className="project-card-top">
+            <span className="project-card-eyebrow">{project.eyebrow}</span>
+            <span className="project-card-visibility">{project.visibility}</span>
+          </div>
+          <h3 className="project-card-title">{project.title}</h3>
+          <p className="project-card-description">{project.description}</p>
+          <p className="project-card-impact">{project.impact}</p>
+          <p className="project-card-tech">{project.tech.slice(0, 4).join(' · ')}</p>
+        </article>
+      ))}
+    </div>
   );
 }
 
@@ -507,7 +467,6 @@ interface ComposerProps {
   onSubmit: (event: React.FormEvent<HTMLFormElement>) => void;
   placeholder: string;
   prompts?: string[];
-  statusLabel: string;
   textareaRef: React.RefObject<HTMLTextAreaElement | null>;
   variant?: 'landing' | 'conversation';
 }
@@ -521,53 +480,70 @@ function Composer({
   onSubmit,
   placeholder,
   prompts,
-  statusLabel,
   textareaRef,
   variant = 'landing',
 }: ComposerProps) {
   const isConversation = variant === 'conversation';
+  const isLanding = variant === 'landing';
 
   return (
     <div>
-      <div className={`composer-panel ${isConversation ? 'composer-panel-compact p-3 sm:p-4' : 'p-4 sm:p-5'}`}>
-        {!isConversation ? (
-          <div className="flex flex-wrap items-center justify-between gap-3 border-b border-white/[0.06] pb-3 text-[11px] uppercase tracking-[0.24em] text-slate">
-            <span className="inline-flex items-center gap-2">
-              <BoltIcon />
-              <span>{statusLabel}</span>
-            </span>
-            <span className="inline-flex items-center gap-2">
-              <span className="signal-dot" />
-              <span>Sabith online</span>
-            </span>
-          </div>
-        ) : null}
+      <div className={`composer-panel ${isConversation ? 'composer-panel-compact p-3 sm:p-4' : 'composer-panel-landing p-4 sm:p-5'}`}>
+        <form onSubmit={onSubmit}>
+          {isLanding ? (
+            <div className="composer-input-shell landing-input-shell">
+              <textarea
+                aria-label="Ask about Sabith's portfolio"
+                className="min-h-[92px] w-full bg-transparent text-[1.03rem] leading-7 text-ink outline-none placeholder:text-slate"
+                onChange={event => onDraftChange(event.target.value)}
+                onKeyDown={onKeyDown}
+                placeholder={placeholder}
+                ref={textareaRef}
+                rows={1}
+                value={draft}
+              />
 
-        <form className={isConversation ? '' : 'mt-4'} onSubmit={onSubmit}>
-          <div className="composer-input-shell">
-            <textarea
-              aria-label="Ask about Sabith's portfolio"
-              className={`w-full bg-transparent pr-3 text-base leading-7 text-ink outline-none placeholder:text-slate ${isConversation ? 'min-h-[54px]' : 'min-h-[64px]'}`}
-              onChange={event => onDraftChange(event.target.value)}
-              onKeyDown={onKeyDown}
-              placeholder={placeholder}
-              ref={textareaRef}
-              rows={1}
-              value={draft}
-            />
+              <div className="landing-input-toolbar">
+                <span className="landing-input-plus" aria-hidden="true">
+                  +
+                </span>
+                <div className="landing-input-toolbar-right">
+                  <span className="landing-input-mode">Sabith mode</span>
+                  <button
+                    className="composer-send landing-send"
+                    disabled={!draft.trim() || isStreaming}
+                    type="submit">
+                    {isStreaming ? <MiniBarsIcon /> : <ArrowUpIcon />}
+                  </button>
+                </div>
+              </div>
+            </div>
+          ) : (
+            <div className="composer-input-shell">
+              <textarea
+                aria-label="Ask about Sabith's portfolio"
+                className={`w-full bg-transparent pr-3 text-base leading-7 text-ink outline-none placeholder:text-slate ${isConversation ? 'min-h-[54px]' : 'min-h-[64px]'}`}
+                onChange={event => onDraftChange(event.target.value)}
+                onKeyDown={onKeyDown}
+                placeholder={placeholder}
+                ref={textareaRef}
+                rows={1}
+                value={draft}
+              />
 
-            <button
-              className="composer-send"
-              disabled={!draft.trim() || isStreaming}
-              type="submit">
-              {isStreaming ? <MiniBarsIcon /> : <ArrowUpIcon />}
-            </button>
-          </div>
+              <button
+                className="composer-send"
+                disabled={!draft.trim() || isStreaming}
+                type="submit">
+                {isStreaming ? <MiniBarsIcon /> : <ArrowUpIcon />}
+              </button>
+            </div>
+          )}
         </form>
       </div>
 
       {prompts && prompts.length > 0 ? (
-        <div className="mt-4 flex flex-wrap justify-center gap-2 sm:justify-start">
+        <div className="mt-4 flex flex-wrap justify-center gap-2">
           {prompts.map(prompt => (
             <button
               key={prompt}
@@ -635,14 +611,6 @@ function ArrowUpIcon() {
   return (
     <svg aria-hidden="true" className="h-4 w-4" fill="none" viewBox="0 0 24 24">
       <path d="M12 5l-5 5 1.4 1.4 2.6-2.6V19h2V8.8l2.6 2.6L17 10l-5-5z" fill="currentColor" />
-    </svg>
-  );
-}
-
-function BoltIcon() {
-  return (
-    <svg aria-hidden="true" className="h-4 w-4" fill="none" viewBox="0 0 24 24">
-      <path d="M13 2L6 13h5l-1 9 8-12h-5l0-8z" fill="currentColor" />
     </svg>
   );
 }

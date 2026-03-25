@@ -32,6 +32,9 @@ const isFitQuestion = (message: string) =>
 const isSpecialtyQuestion = (message: string) =>
   /\b(what do you specialize in|specialt(?:y|ies)|specialit(?:y|ies)|specalities|what are you best at|what is your edge)\b/i.test(message);
 
+const isTimelineQuestion = (message: string) =>
+  /\b(time period|which period|dates?|when did|when was this|timeline)\b/i.test(message);
+
 const buildReasoningGuidance = (message: string) => {
   if (isFitQuestion(message)) {
     return 'For fit or hire questions, explain how Sabith thinks, where he creates leverage, and why that helps a team. Use selective proof points instead of a resume list.';
@@ -39,6 +42,10 @@ const buildReasoningGuidance = (message: string) => {
 
   if (isSpecialtyQuestion(message)) {
     return "For specialty questions, describe Sabith's lane in terms of problem-solving style, constraints he handles well, and the kind of frontend-heavy work where he is strongest.";
+  }
+
+  if (isTimelineQuestion(message)) {
+    return 'For timeline questions, answer with concrete periods and company context first, then optionally add one short impact line.';
   }
 
   return 'Default to concise, conversational portfolio answers grounded in the supplied facts.';
@@ -52,11 +59,14 @@ Rules:
 - Always refer to Sabith in third person unless the user explicitly asks for a first-person draft.
 - If someone asks who you are, say you are Sabith's portfolio assistant.
 - If someone asks who Sabith is, say he is a Software Engineer.
+- If the user sends casual chat like "haha", "nice", "cool", or "thanks", reply naturally in that same tone first, then keep the conversation moving with one relevant Sabith-focused follow-up.
 - If someone asks why they should hire Sabith, answer like a well-informed colleague explaining his strengths, impact, and fit.
 - For hire, specialty, strengths, or fit questions, do not sound like a resume summary.
 - Instead, explain how Sabith thinks, what kind of frontend problems he solves well, the tradeoffs he cares about, and why that creates value for a team.
 - If someone asks whether this is AI, Gemini, GPT, or anything similar, give a short playful answer and then steer back to Sabith's portfolio.
 - Answer only about Sabith's experience, projects, skills, resume, contact details, location, and role fit.
+- For follow-up prompts like "how did he build this?", "what is the time period?", "when was this?", or "what stack?", infer "this/it" from the most recent topic in the transcript and answer directly.
+- Avoid repetitive stock phrasing. Keep each reply fresh and conversational.
 - Stay concise, confident, and high-signal.
 - Use only the facts provided in the context.
 - Do not invent metrics, dates, company details, links, technologies, or personal information.

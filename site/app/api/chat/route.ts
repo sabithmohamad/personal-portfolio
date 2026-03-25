@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { GoogleGenAI } from '@google/genai';
 
 import { buildModelInput, buildSystemPrompt, chunkText, DEFAULT_MODEL, getFallbackStreamText, sanitizeMessages } from '@/lib/chat';
-import { buildDonePayload, detectIntent, isBlockedPrompt, prefersGroundedVoice } from '@/lib/portfolio-data';
+import { buildDonePayload, detectIntent, isBlockedPrompt } from '@/lib/portfolio-data';
 import { rateLimit } from '@/lib/rate-limit';
 
 export const runtime = 'nodejs';
@@ -72,14 +72,7 @@ export async function POST(request: NextRequest) {
 
   const intent = detectIntent(latestUserMessage);
   const donePayload = buildDonePayload(intent, latestUserMessage);
-  const shouldUseGroundedVoice =
-    isBlockedPrompt(latestUserMessage) ||
-    intent === 'unknown' ||
-    intent === 'about' ||
-    intent === 'contact' ||
-    intent === 'resume' ||
-    intent === 'availability' ||
-    prefersGroundedVoice(latestUserMessage);
+  const shouldUseFallback = isBlockedPrompt(latestUserMessage) || !process.env.GEMINI_API_KEY;
 
   const stream = new TransformStream();
   const writer = stream.writable.getWriter();
@@ -97,7 +90,7 @@ export async function POST(request: NextRequest) {
 
   void (async () => {
     try {
-      if (shouldUseGroundedVoice || !process.env.GEMINI_API_KEY) {
+      if (shouldUseFallback) {
         const text = getFallbackStreamText(intent, latestUserMessage);
         await streamText(text);
         await send('done', donePayload);

@@ -1,5 +1,4 @@
 import type {
-  ActionItem,
   ApiChatMessage,
   ChatDonePayload,
   ChatUiBlock,
@@ -16,9 +15,9 @@ export const profile: PortfolioProfile = {
   shortName: 'Sabith',
   role: 'Software Engineer',
   location: 'Abu Dhabi, UAE',
-  tagline: 'Software engineer with strong React and TypeScript depth, product judgment, and measurable delivery.',
+  tagline: 'Software Engineer with strong React and TypeScript depth, product judgment, and measurable delivery.',
   summary:
-    'Software Engineer with 3+ years of production experience, based in Abu Dhabi, UAE. Sabith specializes in React and TypeScript, has shipped real systems used by real users, and approaches frontend work with product judgment, performance awareness, and delivery discipline.',
+    'Software Engineer with 3+ years of production experience, based in Abu Dhabi, UAE. Sabith specializes in React and TypeScript, has shipped production systems used by real users, and approaches frontend work with product judgment, performance awareness, and delivery discipline.',
   yearsExperience: '3+ years',
   metrics: [
     { label: 'Experience', value: '3+ years' },
@@ -38,11 +37,13 @@ export const experiences: PortfolioExperience[] = [
     highlights: [
       'Built a Recovery Time Tracker with real-time driver tracking via Google Maps API.',
       'Built an E-Sign Platform with in-browser PDF display and multi-step signing workflows.',
+      'Built a Warranty Management Web App with role-based access, showroom setup, vehicle make/model configuration, and warranty lifecycle workflows.',
       'Reduced page load time by 46%, from 3.9s to 2.1s, through code splitting and optimization.',
       'Improved operational efficiency by 25% and reduced trip delays by 15%.',
       'Supported live production systems handling 1,000+ weekly sessions.',
       'Replaced manual WhatsApp workflows with automated SMS updates and real-time CRM synchronization.',
       'Achieved 2-second faster data retrieval compared with legacy CRM SQL queries.',
+      'Improved customer satisfaction by 50% based on user survey feedback.',
       'Set up CI/CD on Render and worked closely with PMs, backend, and CRM teams.',
     ],
     stack: ['React', 'TypeScript', 'Google Maps API', 'Supabase', 'REST APIs', 'Render', 'CI/CD'],
@@ -67,18 +68,19 @@ export const experiences: PortfolioExperience[] = [
 
 export const projects: PortfolioProject[] = [
   {
-    slug: 'sabith-os',
-    title: 'SabithOS',
-    eyebrow: 'AI operating system',
+    slug: 'ai-sales-manager',
+    title: 'AI Sales Manager',
+    eyebrow: 'AI automation system',
     description:
-      'An AI-powered autonomous job application system built like a company operating system, with agents for scouting, analysis, research, writing, compilation, and tracking.',
-    impact: 'Already found and scored 82 real ATS jobs, with 21 opportunities scoring 70+.',
-    tech: ['Next.js', 'TypeScript', 'SQLite', 'Docker', 'VPS Deployment', 'Groq Llama 3.3 70B', 'Claude Sonnet', 'GPT Codex'],
-    accentFrom: '#c4b5fd',
-    accentTo: '#38bdf8',
-    visualLabel: 'SO',
-    visibility: 'Personal system',
-    aliases: ['sabithos', 'sabith os', 'ai', 'agents', 'multi-agent', 'job system', 'job application system', 'ats'],
+      'An AI-powered sales workflow that handles conversational lead support on WhatsApp, understands Manglish context, verifies payment updates through Telegram, and keeps reporting loops tight.',
+    impact:
+      'Shows strong system thinking by orchestrating multi-model responses, operations-friendly automations, and practical reporting without adding process overhead.',
+    tech: ['OpenClaw', 'Node.js', 'WhatsApp Business API', 'Claude API', 'Groq', 'Telegram', 'Google Sheets'],
+    accentFrom: '#22d3ee',
+    accentTo: '#6366f1',
+    visualLabel: 'AI',
+    visibility: 'Personal project',
+    aliases: ['ai sales manager', 'sales manager', 'openclaw', 'whatsapp', 'manglish', 'telegram', 'groq', 'claude'],
   },
   {
     slug: 'recovery-time-tracker',
@@ -131,23 +133,27 @@ export const skillGroups = [
   },
   {
     label: 'State and Data',
-    items: ['React Query', 'Zustand', 'Context API', 'REST APIs'],
+    items: ['React Query', 'Zustand', 'Context API', 'REST APIs', 'Supabase'],
   },
   {
     label: 'Tools',
-    items: ['Git', 'Vite', 'Webpack', 'Figma', 'Storybook', 'Chrome DevTools', 'Postman'],
+    items: ['Git', 'GitHub', 'Figma', 'Docker', 'Postman', 'Firebase'],
   },
   {
     label: 'Infrastructure',
     items: ['Vercel', 'AWS S3/CloudFront', 'Supabase', 'Render', 'GitHub Actions', 'Docker'],
   },
   {
+    label: 'Databases',
+    items: ['PostgreSQL', 'MSSQL', 'MongoDB'],
+  },
+  {
     label: 'Performance',
     items: ['Code Splitting', 'Lazy Loading', 'Web Vitals', 'Lighthouse', 'Bundle Optimization'],
   },
   {
-    label: 'AI and Agents',
-    items: ['Prompt Engineering', 'Multi-model Pipelines', 'Agent Architecture'],
+    label: 'AI and Automation',
+    items: ['Prompt Engineering', 'Multi-model Routing', 'Workflow Automation'],
   },
 ];
 
@@ -186,16 +192,10 @@ export const starterPrompts = [
   'Show me Sabith’s main projects.',
 ];
 
-const directContactActions: ActionItem[] = [
-  { label: 'Email', href: `mailto:${contact.email}`, kind: 'email', note: contact.email },
-  { label: 'Phone', href: 'tel:+971552428080', kind: 'phone', note: contact.phone },
-  { label: 'LinkedIn', href: contact.linkedin, kind: 'external', note: 'Best for recruiter outreach' },
-];
-
 const followupsByIntent: Record<PortfolioIntent, string[]> = {
   about: ["What is Sabith's experience?", 'Show me Sabith’s main projects.', 'How can I contact Sabith?'],
-  experience: ['What did Sabith build at Royal Swiss Auto Services?', 'Tell me about SabithOS.', 'What does Sabith specialize in?'],
-  projects: ['Tell me more about SabithOS.', 'Tell me about the E-Sign Platform.', 'How can I contact Sabith?'],
+  experience: ['What did Sabith build at Royal Swiss Auto Services?', 'Tell me about AI Sales Manager.', 'What does Sabith specialize in?'],
+  projects: ['Tell me more about AI Sales Manager.', 'Tell me about the E-Sign Platform.', 'How can I contact Sabith?'],
   skills: ["What is Sabith's experience?", 'What makes Sabith a strong hire?', 'How does Sabith approach performance?'],
   resume: ['Can I get a quick summary first?', 'What are Sabith’s main projects?', 'How can I contact Sabith?'],
   contact: ['Is Sabith open to work internationally?', 'Can I see Sabith’s resume?', 'What kind of work fits Sabith best?'],
@@ -242,7 +242,19 @@ const intentMatchers: Array<{ intent: PortfolioIntent; patterns: RegExp[] }> = [
   },
   {
     intent: 'projects',
-    patterns: [/\bproject/i, /\bbuild/i, /\bwork samples?\b/i, /\be-sign\b/i, /\brecovery\b/i, /\bdashboard\b/i, /\bsabithos\b/i, /\bagent/i],
+    patterns: [
+      /\bproject/i,
+      /\bbuild/i,
+      /\bwork samples?\b/i,
+      /\be-sign\b/i,
+      /\brecovery\b/i,
+      /\bdashboard\b/i,
+      /\bai sales manager\b/i,
+      /\bopenclaw\b/i,
+      /\bwhatsapp\b/i,
+      /\bmanglish\b/i,
+      /\btelegram\b/i,
+    ],
   },
   {
     intent: 'skills',
@@ -261,7 +273,19 @@ const intentMatchers: Array<{ intent: PortfolioIntent; patterns: RegExp[] }> = [
   },
   {
     intent: 'experience',
-    patterns: [/\bexperience\b/i, /\bcareer\b/i, /\bwork history\b/i, /\byears\b/i, /\bcurrent role\b/i, /\broyal swiss\b/i, /\bbb leads\b/i],
+    patterns: [
+      /\bexperience\b/i,
+      /\bcareer\b/i,
+      /\bwork history\b/i,
+      /\byears\b/i,
+      /\bcurrent role\b/i,
+      /\broyal swiss\b/i,
+      /\bbb leads\b/i,
+      /\btime period\b/i,
+      /\bwhich period\b/i,
+      /\bdates?\b/i,
+      /\bwhen did\b/i,
+    ],
   },
   {
     intent: 'about',
@@ -300,6 +324,10 @@ export const isSpecialtyPrompt = (message: string) => specialtyPatterns.some(pat
 export const prefersGroundedVoice = (message: string) => isHirePrompt(message) || isSpecialtyPrompt(message);
 
 const isAiIdentityPrompt = (message: string) => /\b(ai|gemini|gpt|chatgpt|codex|bot|robot)\b/i.test(message);
+const isCasualReactionPrompt = (message: string) =>
+  /\b(haha|hahah|hehe|lol|lmao|nice|cool|great|awesome|okay|ok|alright|sounds good|got it|thanks|thank you|perfect)\b/i.test(
+    message,
+  );
 
 const pickReply = (message: string, variants: string[]) => {
   const seed = message
@@ -381,7 +409,17 @@ export const detectIntent = (message: string): PortfolioIntent => {
 export const getReferencedProjects = (message: string) => {
   const lowered = message.toLowerCase();
   const focused = projects.filter(project => project.aliases.some(alias => lowered.includes(alias)));
-  return focused.length > 0 ? focused : projects;
+
+  if (focused.length > 0) {
+    return focused;
+  }
+
+  if (/\bone project\b|\ba project\b|\bsingle project\b/.test(lowered)) {
+    const defaultSingle = projects.find(project => project.slug === 'recovery-time-tracker') ?? projects[0];
+    return defaultSingle ? [defaultSingle] : projects;
+  }
+
+  return projects;
 };
 
 const getReferencedExperience = (message: string) => {
@@ -396,6 +434,19 @@ const getReferencedExperience = (message: string) => {
   }
 
   return experiences;
+};
+
+const getProjectTimelineNote = (project: PortfolioProject) => {
+  switch (project.slug) {
+    case 'recovery-time-tracker':
+    case 'e-sign-platform':
+      return 'Built at Royal Swiss Auto Services (Dec 2023 - Present).';
+    case 'ai-sales-manager':
+    case 'task-management-dashboard':
+      return 'Personal project work built and iterated independently.';
+    default:
+      return '';
+  }
 };
 
 export const getUiBlocksForIntent = (intent: PortfolioIntent, message: string): ChatUiBlock[] => {
@@ -459,7 +510,7 @@ export const getSuggestedFollowups = (intent: PortfolioIntent) => followupsByInt
 
 export const buildDonePayload = (intent: PortfolioIntent, message: string): ChatDonePayload => ({
   intent,
-  uiBlocks: [],
+  uiBlocks: intent === 'projects' ? getUiBlocksForIntent(intent, message).filter(block => block.type === 'projects') : [],
   suggestedFollowups: [],
 });
 
@@ -486,12 +537,14 @@ export const generateFallbackAnswer = (intent: PortfolioIntent, message: string)
 
       if (focusedProjects.length === 1) {
         const [project] = focusedProjects;
-        return `${project.title} is one of the clearest examples of Sabith's work. ${project.description}\n\nThe result is straightforward: ${project.impact} It also shows the kind of systems thinking he brings when a product has to feel polished without becoming overengineered.`;
+        const timelineNote = getProjectTimelineNote(project);
+        const timelineLine = timelineNote ? ` ${timelineNote}` : '';
+        return `${project.title} is one of the clearest examples of Sabith's work. ${project.description}${timelineLine}\n\nHe built it with ${joinList(project.tech)} and the outcome was clear: ${project.impact}`;
       }
 
       return `The main projects worth starting with are ${joinList(
         focusedProjects.map(project => project.title),
-      )}. Together they show production delivery, performance work, operational workflow design, and some real system-thinking beyond standard portfolio demos.\n\nIf there is one to go deeper on first, SabithOS is probably the best showcase of ambition and architecture, while the Royal Swiss products are the best proof of production impact.`;
+      )}. Together they show production delivery, performance work, operational workflow design, and practical system thinking across both internal platforms and AI-assisted workflows.\n\nIf there is one to go deeper on first, AI Sales Manager is the best lens on Sabith's system-level thinking, while the Royal Swiss products are the strongest proof of production impact.`;
     }
     case 'skills':
       if (isSpecialtyPrompt(message)) {
@@ -506,6 +559,14 @@ export const generateFallbackAnswer = (intent: PortfolioIntent, message: string)
     case 'availability':
       return `Sabith is open to strong opportunities in any country. He is especially interested in teams doing real product work with a solid stack, good engineering standards, and genuine ownership rather than maintenance-only roles.`;
     default:
+      if (isCasualReactionPrompt(message)) {
+        return pickReply(message, [
+          `Love that. Want a quick take on Sabith's strongest hiring edge, or should this assistant jump into his top project first?`,
+          `Nice. If helpful, this assistant can keep going with either Sabith's current role impact or his best project breakdown.`,
+          `Perfect. Next move can be a short "why hire Sabith" summary or a project-by-project walkthrough, your call.`,
+        ]);
+      }
+
       return playfulRedirect(message);
   }
 };
@@ -537,6 +598,20 @@ export const buildIntentContext = (intent: PortfolioIntent, message: string) => 
           project =>
             `- ${project.title}: ${project.description}\n  Impact: ${project.impact}\n  Tech: ${project.tech.join(', ')}\n  Visibility: ${project.visibility}`,
         )
+        .join('\n')}`,
+    );
+  }
+
+  if (intent === 'unknown') {
+    sections.push(
+      `Useful project references:\n${projects
+        .slice(0, 4)
+        .map(project => `- ${project.title}: ${project.description} Impact: ${project.impact}`)
+        .join('\n')}`,
+    );
+    sections.push(
+      `Useful experience references:\n${experiences
+        .map(experience => `- ${experience.role} at ${experience.company} (${experience.period})`)
         .join('\n')}`,
     );
   }

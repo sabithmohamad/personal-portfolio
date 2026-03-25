@@ -21,7 +21,7 @@ Experience:
 - Frontend Developer at BB Leads, Remote (Apr 2023 - Dec 2023)
 
 Projects:
-- SabithOS
+- AI Sales Manager
 - Recovery Time Tracker
 - E-Sign Platform
 - Task Management Dashboard
