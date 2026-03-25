@@ -13,7 +13,7 @@ const responseLoaderSteps = [
   'Writing a sharp reply',
 ];
 
-const conversationMeta = ['Text-only v1', 'Portfolio-scoped answers', 'Resume always available'];
+const heroPhrases = ['shipped products.', 'performance wins.', 'system thinking.'];
 
 const generateId = () => {
   if (typeof crypto !== 'undefined' && 'randomUUID' in crypto) {
@@ -289,24 +289,38 @@ export function ChatApp() {
   return (
     <main className="app-stage">
       <div className="app-shell">
+        <div aria-hidden="true" className="shell-ambience">
+          <span className="ambient-orb ambient-orb-cyan" />
+          <span className="ambient-orb ambient-orb-amber" />
+          <span className="ambient-beam" />
+          <span className="ambient-grid" />
+        </div>
+
         <div className="browser-shell flex h-full w-full flex-col overflow-hidden">
           <BrowserChrome actions={fixedActions} />
 
-          <div className="flex min-h-0 flex-1">
-            <aside className="side-rail hidden md:flex">
+          <div className="app-body flex min-h-0 flex-1">
+            <div className="floating-mark hidden md:flex" aria-hidden="true">
               <button className="rail-button" type="button">
-                <SabithMarkIcon className="h-6 w-6" />
+                <SabithMarkIcon animated className="h-6 w-6" />
               </button>
-            </aside>
+            </div>
 
             <section className="content-frame flex min-h-0 flex-1 flex-col overflow-hidden">
               {!hasConversation ? (
                 <div className="landing-screen">
                   <div className="landing-hero">
                     <div className="landing-stack">
-                      <h1 className="landing-title text-balance font-semibold tracking-[-0.05em] text-ink">
-                        Good to see you. Ask Sabith anything.
-                      </h1>
+                      <div className="landing-title-shell">
+                        <p className="landing-kicker">Sabith, through the work</p>
+                        <h1 className="landing-title text-balance font-semibold tracking-[-0.05em] text-ink">
+                          <span className="landing-title-static">Start with</span>
+                          <RotatingHeroPhrase phrases={heroPhrases} />
+                        </h1>
+                        <p className="landing-subtitle text-balance text-mist">
+                          Ask about what shipped, what improved, and how Sabith thinks when the stakes are real.
+                        </p>
+                      </div>
                     </div>
                   </div>
 
@@ -336,16 +350,6 @@ export function ChatApp() {
                     className="chat-scroll-area flex-1 overflow-y-auto px-4 pb-4 pt-5 sm:px-8 sm:pb-6 sm:pt-8"
                     ref={transcriptViewportRef}>
                     <div aria-live="polite" className="mx-auto max-w-4xl space-y-6">
-                      <div className="conversation-intro">
-                        <div className="flex items-center gap-2 text-[11px] uppercase tracking-[0.28em] text-slate">
-                          <span className="signal-dot" />
-                          <span>Chatting with Sabith</span>
-                        </div>
-                        <p className="mt-2 text-sm leading-6 text-mist">
-                          Ask about shipped products, performance, collaboration, or why I might be a strong fit.
-                        </p>
-                      </div>
-
                       {messages.map(message => {
                         const isAssistant = message.role === 'assistant';
 
@@ -401,12 +405,6 @@ export function ChatApp() {
                         variant="conversation"
                       />
 
-                      <div className="conversation-meta mt-3 flex flex-wrap items-center gap-3 text-[11px] uppercase tracking-[0.24em] text-slate">
-                        {conversationMeta.map(item => (
-                          <span key={item}>{item}</span>
-                        ))}
-                      </div>
-
                       <VisitorCount count={visitorCount} />
 
                       {error ? <p className="mt-3 text-sm text-orange-200/90">{error}</p> : null}
@@ -419,6 +417,69 @@ export function ChatApp() {
         </div>
       </div>
     </main>
+  );
+}
+
+function RotatingHeroPhrase({ phrases }: { phrases: string[] }) {
+  const [activeIndex, setActiveIndex] = useState(0);
+  const [nextIndex, setNextIndex] = useState<number | null>(null);
+  const [reducedMotion, setReducedMotion] = useState(true);
+
+  useEffect(() => {
+    const media = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const legacyMedia = media as MediaQueryList & {
+      addListener?: (listener: (event: MediaQueryListEvent) => void) => void;
+      removeListener?: (listener: (event: MediaQueryListEvent) => void) => void;
+    };
+    const syncPreference = () => setReducedMotion(media.matches);
+
+    syncPreference();
+
+    if ('addEventListener' in media) {
+      media.addEventListener('change', syncPreference);
+
+      return () => media.removeEventListener('change', syncPreference);
+    }
+
+    legacyMedia.addListener?.(syncPreference);
+
+    return () => legacyMedia.removeListener?.(syncPreference);
+  }, []);
+
+  useEffect(() => {
+    if (reducedMotion || nextIndex !== null) {
+      return;
+    }
+
+    const timeout = window.setTimeout(() => {
+      setNextIndex((activeIndex + 1) % phrases.length);
+    }, 2600);
+
+    return () => window.clearTimeout(timeout);
+  }, [activeIndex, nextIndex, phrases.length, reducedMotion]);
+
+  useEffect(() => {
+    if (nextIndex === null) {
+      return;
+    }
+
+    const timeout = window.setTimeout(() => {
+      setActiveIndex(nextIndex);
+      setNextIndex(null);
+    }, 420);
+
+    return () => window.clearTimeout(timeout);
+  }, [nextIndex]);
+
+  const upcomingPhrase = phrases[nextIndex ?? (activeIndex + 1) % phrases.length];
+
+  return (
+    <span className={`landing-title-dynamic-shell ${nextIndex !== null ? 'is-switching' : ''}`}>
+      <span className="landing-title-dynamic current">{phrases[activeIndex]}</span>
+      <span aria-hidden="true" className="landing-title-dynamic next">
+        {upcomingPhrase}
+      </span>
+    </span>
   );
 }
 

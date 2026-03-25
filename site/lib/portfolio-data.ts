@@ -400,15 +400,12 @@ const getReferencedExperience = (message: string) => {
 
 export const getUiBlocksForIntent = (intent: PortfolioIntent, message: string): ChatUiBlock[] => {
   if (isHirePrompt(message)) {
-    return [
-      { type: 'metrics', title: 'Why Sabith stands out', items: profile.metrics },
-      { type: 'actions', title: 'Reach out directly', items: directContactActions },
-    ];
+    return [{ type: 'actions', title: 'Reach out directly', items: directContactActions }];
   }
 
   switch (intent) {
     case 'about':
-      return [{ type: 'metrics', title: 'Quick snapshot', items: profile.metrics }];
+      return [];
     case 'experience':
       return [
         {
@@ -420,7 +417,6 @@ export const getUiBlocksForIntent = (intent: PortfolioIntent, message: string): 
             summary: experience.summary,
           })),
         },
-        { type: 'metrics', title: 'Impact highlights', items: profile.metrics },
       ];
     case 'projects':
       return [

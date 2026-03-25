@@ -17,20 +17,6 @@ export function RichBlocks({ blocks, suggestedFollowups, onPromptSelect }: RichB
     <div className="mt-4 space-y-4">
       {blocks?.map((block, index) => {
         switch (block.type) {
-          case 'metrics':
-            return (
-              <section key={`${block.type}-${index}`} className="glass-card">
-                <p className="font-mono text-[11px] uppercase tracking-[0.3em] text-slate">{block.title}</p>
-                <div className="mt-3 grid gap-3 sm:grid-cols-3">
-                  {block.items.map(item => (
-                    <div key={`${block.title}-${item.label}`} className="rounded-[20px] border border-white/[0.08] bg-white/[0.02] p-3">
-                      <p className="text-xs text-slate">{item.label}</p>
-                      <p className="mt-1 text-sm font-semibold text-ink">{item.value}</p>
-                    </div>
-                  ))}
-                </div>
-              </section>
-            );
           case 'timeline':
             return (
               <section key={`${block.type}-${index}`} className="glass-card">
