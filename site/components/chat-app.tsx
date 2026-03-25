@@ -28,7 +28,7 @@ const parseSseChunk = (
     onError: (message: string) => void;
   },
 ) => {
-  const lines = chunk.split('\n');
+  const lines = chunk.split(/\r?\n/);
   let event = 'message';
   let data = '';
 
@@ -211,11 +211,13 @@ export function ChatApp() {
 
       const decoder = new TextDecoder();
       let buffer = '';
+      let didReceiveDone = false;
 
       while (true) {
         const { done, value } = await reader.read();
 
         if (done) {
+          buffer += decoder.decode();
           break;
         }
 
@@ -234,6 +236,7 @@ export function ChatApp() {
               }));
             },
             onDone: payload => {
+              didReceiveDone = true;
               updateAssistantMessage(assistantId, current => ({
                 ...current,
                 status: 'done',
@@ -251,6 +254,41 @@ export function ChatApp() {
             },
           });
         }
+      }
+
+      if (buffer.trim().length > 0) {
+        parseSseChunk(buffer.trim(), {
+          onChunk: delta => {
+            updateAssistantMessage(assistantId, current => ({
+              ...current,
+              content: `${current.content}${delta}`,
+            }));
+          },
+          onDone: payload => {
+            didReceiveDone = true;
+            updateAssistantMessage(assistantId, current => ({
+              ...current,
+              status: 'done',
+              uiBlocks: payload.uiBlocks,
+              suggestedFollowups: payload.suggestedFollowups,
+            }));
+          },
+          onError: message => {
+            setError(message);
+            updateAssistantMessage(assistantId, current => ({
+              ...current,
+              status: 'error',
+              content: current.content || message,
+            }));
+          },
+        });
+      }
+
+      if (!didReceiveDone) {
+        updateAssistantMessage(assistantId, current => ({
+          ...current,
+          status: current.status === 'error' ? 'error' : 'done',
+        }));
       }
     } catch (caughtError) {
       const message = caughtError instanceof Error ? caughtError.message : 'Unable to complete the request.';

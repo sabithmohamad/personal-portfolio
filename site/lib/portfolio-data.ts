@@ -633,6 +633,6 @@ export const buildIntentContext = (intent: PortfolioIntent, message: string) => 
 
 export const buildConversationTranscript = (messages: ApiChatMessage[]) =>
   messages
-    .slice(-6)
+    .slice(-12)
     .map(message => `${message.role === 'user' ? 'User' : 'Assistant'}: ${message.content}`)
     .join('\n');

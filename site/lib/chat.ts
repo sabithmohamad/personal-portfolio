@@ -80,10 +80,16 @@ Answer-shaping guidance: ${buildReasoningGuidance(latestUserMessage)}
 
 export const buildModelInput = (intent: PortfolioIntent, messages: ApiChatMessage[]) => {
   const latestUserMessage = [...messages].reverse().find(message => message.role === 'user')?.content ?? '';
+  const previousUserMessage =
+    [...messages]
+      .reverse()
+      .find(message => message.role === 'user' && message.content !== latestUserMessage)
+      ?.content ?? '';
 
   return [
     "The visitor is chatting with Sabith's portfolio assistant on his website.",
     'Answer in third person about Sabith and stay grounded only in the provided facts.',
+    previousUserMessage ? `Previous user message for context: ${previousUserMessage}` : 'Previous user message for context: None',
     `Reasoning guidance: ${buildReasoningGuidance(latestUserMessage)}`,
     `Latest user message: ${latestUserMessage}`,
     `Conversation transcript:\n${buildConversationTranscript(messages) || 'None'}`,

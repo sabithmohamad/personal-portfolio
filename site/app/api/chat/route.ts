@@ -106,7 +106,7 @@ export async function POST(request: NextRequest) {
         contents: buildModelInput(intent, messages),
         config: {
           systemInstruction: buildSystemPrompt(intent, latestUserMessage),
-          maxOutputTokens: 320,
+          maxOutputTokens: 420,
         },
       });
 
