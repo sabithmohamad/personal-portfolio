@@ -86,28 +86,6 @@ export function RichBlocks({ blocks, suggestedFollowups, onPromptSelect }: RichB
                 </div>
               </section>
             );
-          case 'actions':
-            return (
-              <section key={`${block.type}-${index}`} className="glass-card">
-                <p className="font-mono text-[11px] uppercase tracking-[0.3em] text-slate">{block.title}</p>
-                <div className="mt-3 grid gap-3 sm:grid-cols-2">
-                  {block.items.map(item => (
-                    <a
-                      key={`${block.title}-${item.label}`}
-                      className="rounded-[20px] border border-white/[0.08] bg-white/[0.02] p-4 transition hover:border-white/20 hover:bg-white/[0.05]"
-                      href={item.href}
-                      rel={item.kind === 'external' ? 'noreferrer' : undefined}
-                      target={item.kind === 'external' ? '_blank' : undefined}>
-                      <div className="flex items-center justify-between gap-3">
-                        <span className="text-sm font-semibold text-ink">{item.label}</span>
-                        <span className="font-mono text-[11px] uppercase tracking-[0.2em] text-slate">{item.kind}</span>
-                      </div>
-                      {item.note ? <p className="mt-2 text-sm text-mist">{item.note}</p> : null}
-                    </a>
-                  ))}
-                </div>
-              </section>
-            );
           default:
             return null;
         }

@@ -400,7 +400,7 @@ const getReferencedExperience = (message: string) => {
 
 export const getUiBlocksForIntent = (intent: PortfolioIntent, message: string): ChatUiBlock[] => {
   if (isHirePrompt(message)) {
-    return [{ type: 'actions', title: 'Reach out directly', items: directContactActions }];
+    return [];
   }
 
   switch (intent) {
@@ -445,11 +445,11 @@ export const getUiBlocksForIntent = (intent: PortfolioIntent, message: string): 
         },
       ];
     case 'resume':
-      return [{ type: 'actions', title: 'Resume and direct links', items: [...contact.actions, directContactActions[1]] }];
+      return [];
     case 'contact':
-      return [{ type: 'actions', title: 'Direct contact', items: directContactActions }];
+      return [];
     case 'availability':
-      return [{ type: 'actions', title: 'Best next step', items: [...directContactActions, contact.actions[0]] }];
+      return [];
     default:
       return [];
   }
