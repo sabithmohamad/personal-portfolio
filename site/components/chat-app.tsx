@@ -3,7 +3,6 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 
 import { contact, starterPrompts } from '@/lib/portfolio-data';
-import { RichBlocks } from '@/components/rich-blocks';
 import { SabithMarkIcon } from '@/components/sabith-mark';
 import type { ApiChatMessage, ChatDonePayload, ChatMessage } from '@/types/chat';
 
@@ -240,8 +239,6 @@ export function ChatApp() {
               updateAssistantMessage(assistantId, current => ({
                 ...current,
                 status: 'done',
-                uiBlocks: payload.uiBlocks,
-                suggestedFollowups: payload.suggestedFollowups,
               }));
             },
             onError: message => {
@@ -376,13 +373,6 @@ export function ChatApp() {
                               ) : null}
                             </div>
 
-                            {isAssistant ? (
-                              <RichBlocks
-                                blocks={message.uiBlocks}
-                                onPromptSelect={onPromptSelect}
-                                suggestedFollowups={message.suggestedFollowups}
-                              />
-                            ) : null}
                           </article>
                         );
                       })}

@@ -459,8 +459,8 @@ export const getSuggestedFollowups = (intent: PortfolioIntent) => followupsByInt
 
 export const buildDonePayload = (intent: PortfolioIntent, message: string): ChatDonePayload => ({
   intent,
-  uiBlocks: getUiBlocksForIntent(intent, message),
-  suggestedFollowups: getSuggestedFollowups(intent),
+  uiBlocks: [],
+  suggestedFollowups: [],
 });
 
 export const generateFallbackAnswer = (intent: PortfolioIntent, message: string) => {
